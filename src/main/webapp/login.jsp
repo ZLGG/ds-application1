@@ -81,7 +81,7 @@
             </div>
             <div class="layui-form-item login-btn">
               <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="demo1" onclick="return false">登录</button>
+                <button class="layui-btn" lay-submit="" lay-filter="demo1" <%--onclick="return false"--%>>登录</button>
               </div>
             </div>
           </form>
@@ -172,27 +172,32 @@
         form.on('submit(demo1)',function (data) {
             $.ajax({
                 url:"/login",
-                data:JSON.stringify(data.field),
-                //contentType:'application/json:charset=utf-8',
+                data:data.field,
+               /* contentType:'application/json:charset=utf-8',*/
                 dataType:"json",
-                type:"post",
-                success:function (data1) {
-                    if (data1.result==SUCCESS){
-                        layer.msg(data1.data, 1000);
+                type:'post',
+               /* headers: {
+                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrZW4iLCJpYXQiOjE1Mzc1NTQzMDksImRhdGEiOnsidXNlcm5hbWUiOiJ4dXRvbmdiYW8iLCJpc19zdXBlcnVzZXIiOjEsImlkIjoxNywibG9naW5fdGltZSI6MTUzNzU1NDMwOX0sImV4cCI6MTUzODE1NDMwOX0.32Lys4hjjY2XRpM2r9YSmpYA798u821m_M5Tzb6wxIU",
+                    'Content-Type': 'application/x-www-form-urlencoded'  //multipart/form-data;boundary=--xxxxxxx   application/json
+                },*/
+                success:function (result) {
+                    if (result.result=='SUCCESS'){
+                        //layer.msg(data1.data, 1000);
                         setTimeout(function () {
                             window.location.href = "/index.jsp";
                         },1000)
                     }
                     else {
-                        layer.msg(data1.errorMsg,{time:1000});
+                        layer.msg(result.errorMsg,{time:1000});
                     }
                     },
                 error:function () {
-                    console.log(data1);
+                    layer.msg("异常");
                 }
             });
-        })
-    })
+            return false;
+        });
+    });
   </script>
 
 </body>

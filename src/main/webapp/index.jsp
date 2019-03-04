@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -16,16 +17,17 @@
         <a href="#">首页</a>
       </p>
       <div class="sn-quick-menu">
-        <div class="login"><c:choose>
+        <div class="login">
+            <c:choose>
                   <c:when test="${sessionScope.user!=null}">
-                    <div class="login">${sessionScope.user.name}</div>
+                    <div class="login">${sessionScope.user.nickName}</div>
                   </c:when>
-                  <c:otherwise>
+                <c:otherwise>
                     <div class="login"><a href="login.html">登录</a></div>
-                  </c:otherwise>
-              </c:choose>
+                </c:otherwise>
+            </c:choose>
         </div>
-        <div class="sp-cart"><a href="shopcart.html">购物车</a><span>2</span></div>
+        <div class="sp-cart"><a href="/test/shopcart">购物车</a><%--<span>2</span>--%></div>
       </div>
     </div>
   </div>
