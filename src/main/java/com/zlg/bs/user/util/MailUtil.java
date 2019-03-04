@@ -8,33 +8,34 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
+/*import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;*/
 
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 @Service
 public class MailUtil {
-    @Autowired
-    TemplateEngine templateEngine;
+    /*@Autowired
+    TemplateEngine templateEngine;*/
     @Autowired
     JavaMailSender jms;
 
-    public String send(){
+    public String send(String email){
         //建立邮件消息
         SimpleMailMessage mainMessage = new SimpleMailMessage();
         //发送者
         mainMessage.setFrom("17633901170@163.com");
         //接收者
-        mainMessage.setTo("376781958@qq.com");
+        mainMessage.setTo(email);
         //发送的标题
-        mainMessage.setSubject("嗨喽");
+        mainMessage.setSubject("你登录的验证码");
         //发送的内容
-        mainMessage.setText("hello world");
+        String code = VerifyCodeUtils.generateVerifyCode(4);
+        mainMessage.setText(code);
         jms.send(mainMessage);
-        return "1";
+        return code;
     }
-    @RequestMapping("/sendhtml")
+    /*@RequestMapping("/sendhtml")
     public String sendHtml() throws Exception{
         MimeMessage mimeMessage = jms.createMimeMessage();
         Context context = new Context();
@@ -62,5 +63,5 @@ public class MailUtil {
         mimeMessageHelper.addAttachment(fileName,fileSystemResource);
         jms.send(mimeMessage);
         return "success";
-    }
+    }*/
 }

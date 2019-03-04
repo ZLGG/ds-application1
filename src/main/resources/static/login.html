@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" href="layui/css/layui.css"/>
+    <style>
+        body {
+            background-color: #f1f1f1;
+            /*background-image: url("/imag/kv.jpg");*/
+        }
+        .center{
+            width:330px;
+            height: 500px;
+            position: absolute;
+            top: 50%;
+            left: 80%;
+            margin-top: -250px;
+            margin-left: -300px;
+            background: white;
+            padding:20px;
+        }
+        .p5{
+            margin-left:5px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="center">
+    <h1>登录</h1>
+    <hr>
+    <form class="layui-form" action="" method="post" style="margin-top:30px;">
+        <div class="layui-form-item">
+            <div class="layui-input-block p5">
+                <input type="text" name="username" required  lay-verify="required" placeholder="手机号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block p5">
+                <input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block p5">
+                <button class="layui-btn" lay-submit lay-filter="login" style='width:100%;' onclick="/login">登录</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

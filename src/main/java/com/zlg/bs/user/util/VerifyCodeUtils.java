@@ -1,4 +1,4 @@
-package com.zlg.bs.util;
+package com.zlg.bs.user.util;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

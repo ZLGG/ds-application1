@@ -3,7 +3,7 @@ package com.zlg.bs.user.service;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.zlg.bs.center.user.api.UserApi;
 import com.zlg.bs.center.user.eo.UserEo;
-import com.zlg.bs.user.util.MailUtil;
+import com.zlg.bs.center.user.vo.ResponseDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,32 +15,37 @@ public class UserServiceImpl implements UserService{
     UserApi userApi;
 
 
-    public String getUserById(int id) {
-        UserEo userEo = userApi.selectUserById(1);
-        return userEo.toString();
+    public ResponseDto getUserById(int id) {
+        ResponseDto<UserEo> responseDto = userApi.selectUserById(1);
+        return responseDto;
     }
 
-    public String getUser(UserEo userEo) {
-        userEo.setMobile("17633901170");
-        List<UserEo> userEos = userApi.selectUser(userEo);
-        return userEos.toString();
+    public ResponseDto<List<UserEo>> getUser(UserEo userEo) {
+        ResponseDto<List<UserEo>> listResponseDto = userApi.selectUser(userEo);
+        return listResponseDto;
     }
 
     @Override
-    public void insertUser(UserEo userEo) {
+    public UserEo insertUser(UserEo userEo) {
         UUID uuid = UUID.randomUUID();
         String s = String.valueOf(uuid);
-
+        long accountId = Long.parseLong(s);
+        if (userEo != null) {
+            userEo.setAccountId(accountId);
+            userApi.insertUser(userEo);
+            return null;
+        }
+        return null;
     }
 
     @Override
-    public void updateUser(UserEo userEo) {
-
+    public UserEo updateUser(UserEo userEo) {
+        return null;
     }
 
     @Override
-    public void deleteUser(int id) {
-
+    public String deleteUser(int id) {
+        return null;
     }
 
 }
