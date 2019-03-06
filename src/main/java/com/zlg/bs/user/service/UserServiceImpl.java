@@ -27,11 +27,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserEo insertUser(UserEo userEo) {
-        UUID uuid = UUID.randomUUID();
-        String s = String.valueOf(uuid);
-        long accountId = Long.parseLong(s);
+
         if (userEo != null) {
-            userEo.setAccountId(accountId);
             userApi.insertUser(userEo);
             return null;
         }

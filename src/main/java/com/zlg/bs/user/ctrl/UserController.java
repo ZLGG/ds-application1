@@ -10,6 +10,7 @@ import com.zlg.bs.center.user.eo.UserEo;
 import com.zlg.bs.center.user.vo.ResponseDto;
 import com.zlg.bs.user.service.UserServiceImpl;
 import com.zlg.bs.user.util.MailUtil;
+import com.zlg.bs.user.util.UuidUtil;
 import com.zlg.bs.user.util.VerifyCodeUtils;
 import com.zlg.bs.vo.Constans;
 import org.apache.catalina.User;
@@ -24,10 +25,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Email;
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 public class UserController {
@@ -49,14 +52,7 @@ public class UserController {
         return null;
     }
 
-    public String registerUser(UserEo userEo) {
-        ResponseDto<List<UserEo>> user = userService.getUser(userEo);
-        if (user == null) {
-            userService.insertUser(userEo);
-            return "success";
-        }
-        return "error";
-    }
+
 
    /* @RequestMapping("/getMail")
     public String mail() {
@@ -64,19 +60,18 @@ public class UserController {
         return send;
     }*/
 
-    @RequestMapping(value = "/verifyCode",method = RequestMethod.GET)
-    public String verifyCode(String email, HttpSession session) throws Exception{
-       /* ServletOutputStream outputStream = response.getOutputStream();
-        *//*String code = VerifyCodeUtils.generateVerifyCode(4);*//*
+    @RequestMapping(value = "/verifyCode", method = RequestMethod.GET)
+    public String verifyCode(String email, HttpSession session) throws Exception {
+        /* ServletOutputStream outputStream = response.getOutputStream();
+         *//*String code = VerifyCodeUtils.generateVerifyCode(4);*//*
         String code = VerifyCodeUtils.outputVerifyImage(200, 80, outputStream, 4);
         session.setAttribute("code", code);*/
         //String email1 = request.getParameter("email");
         String code = VerifyCodeUtils.generateVerifyCode(4);
         UserEo userEo = new UserEo();
-        userEo.setMobile(email);
+        userEo.setEmail(email);
         userEo.setPassword(code);
-        userEo.setNickName("zlg");
-        session.setAttribute("user",userEo);
+        session.setAttribute("user", userEo);
         mailUtil.send(email);
         return "{\n" +
                 "  \"status\":0,\n" +
@@ -85,26 +80,42 @@ public class UserController {
     }
 
     @RequestMapping("/verifyCation")
-    public String verifyCation(HttpSession session,String code) {
-        String verifyCode = (String)session.getAttribute("code");
+    public String verifyCation(HttpSession session, String code) {
+        String verifyCode = (String) session.getAttribute("code");
         if (verifyCode.equals(code)) {
             return "success";
         }
         return "false";
     }
 
-    @RequestMapping("/login")
-    public ResponseDto login(UserEo userEo,HttpSession session) {
-        UserEo user1 = (UserEo)session.getAttribute("user");
+    @RequestMapping(value = "/login")
+    public ResponseDto login(HttpSession session, String email, String pnum) {
+
+        UserEo user1 = (UserEo) session.getAttribute("user");
         //ResponseDto<List<UserEo>> user = userService.getUser(userEo);
-        if (!userEo.getMobile().equals(user1.getMobile())){
+        if (user1 == null) {
+            return new ResponseDto(ResponseDto.RESULT_FAIL, "请重新获取验证码");
+        }
+        if (!email.equals(user1.getEmail())) {
             return new ResponseDto(ResponseDto.RESULT_FAIL, "账号不对");
         }
-        if (!userEo.getPassword().equals(user1.getPassword())) {
-            return new ResponseDto(ResponseDto.RESULT_FAIL, "验证码错我");
-        }
-        else {
-            return new ResponseDto(user1);
+        if (!pnum.equals(user1.getPassword())||user1.getPassword()==null) {
+            return new ResponseDto(ResponseDto.RESULT_FAIL, "验证码错误");
+        } else {
+            String accountId = UuidUtil.generateString(new SecureRandom(), UuidUtil.SOURCES, 13);
+            //昵称暂时也与accountId相同
+            ResponseDto<List<UserEo>> user = userService.getUser(user1);
+            if (user.getData().size() == 0) {
+                user1.setAccountId("ds_" + accountId);
+                user1.setNickName("ds_" + accountId);
+                userService.insertUser(user1);
+                session.setAttribute("user",user1);
+                return new ResponseDto(user1);
+            }
+            session.setAttribute("user",user.getData().get(0));
+            return new ResponseDto(user.getData().get(0));
         }
     }
+
+
 }

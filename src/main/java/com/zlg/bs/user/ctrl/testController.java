@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 public class testController {
     @RequestMapping("/test/{name}")
     public String test(@PathVariable String name, HttpSession session) {
-        session.setAttribute("user","zlg");
+        //session.setAttribute("user","zlg");
         return name;
     }
 }

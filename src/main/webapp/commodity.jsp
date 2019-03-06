@@ -112,17 +112,9 @@
             </div>
             <div class="right-cont-wrap">
                 <div class="right-cont">
-                    <div class="sort layui-clear">
-                        <a class="active" href="javascript:;" event='volume'>销量</a>
-                        <a href="javascript:;" event='price'>价格</a>
-                        <a href="javascript:;" event='newprod'>新品</a>
-                        <a href="javascript:;" event='collection'>收藏</a>
-                    </div>
-                    <div class="prod-number">
-                        <span>200个</span>
-                    </div>
+
                     <div class="cont-list layui-clear" id="list-cont">
-                        <div class="item">
+                       <%-- <div class="item">
                             <div class="img">
                                 <a href="javascript:;"><img src="/static/img/paging_img1.jpg"></a>
                             </div>
@@ -289,8 +281,8 @@
                                     <span class="nub">1266付款</span>
                                 </p>
                             </div>
-                        </div>
-                        <div class="item">
+                        </div>--%>
+                        <%--<div class="item">
                             <div class="img">
                                 <a href="javascript:;"><img src="/static/img/paging_img3.jpg"></a>
                             </div>
@@ -301,17 +293,17 @@
                                     <span class="nub">1266付款</span>
                                 </p>
                             </div>
-                        </div>
+                        </div>--%>
                     </div>
                     <!-- 模版引擎导入 -->
-                    <!-- <script type="text/html" id="demo">
+                    <script type="text/html" id="demo">
                       {{# layui.each(d.menu.milk.content,function(index,item){}}
                         <div class="item">
                           <div class="img">
                             <a href="javascript:;"><img src="{{item.img}}"></a>
                           </div>
                           <div class="text">
-                            <p class="title"></p>
+                            <p class="title">{{item.title}}</p>
                             <p class="price">
                               <span class="pri">{{item.pri}}</span>
                               <span class="nub">{{item.nub}}</span>
@@ -319,7 +311,7 @@
                           </div>
                         </div>
                       {{# }); }}
-                    </script> -->
+                    </script>
                     <div id="demo0" style="text-align: center;"></div>
                 </div>
             </div>
@@ -327,32 +319,74 @@
     </div>
 </div>
 <script>
-
+    //var count;
     layui.config({
         base: '/static/js/util/'   //你存放新模块的目录，注意，不是layui的模块目录
     }).use(['mm', 'laypage', 'jquery'], function () {
-        var laypage = layui.laypage, $ = layui.$,
+        var laypage = layui.laypage,
+            $ = layui.$,
             mm = layui.mm;
-        laypage.render({
-            elem: 'demo0'
-            , count: 100 //数据总数
-        });
+
+        mm.request({
+            url: '/getCount',
+            //ata:{account:obj.curr,pagesize:obj.limit},
+            success : function(res){
+                console.log(res)
+                //count = res.count;
+                laypage.render({
+                    elem: 'demo0',
+                    limit:3
+                    , count:res.count//数据总数
+                    , jump: function (obj, first) {
+                        mm.request({
+                            url: '/getCommodity',
+                            data:{account:obj.curr,pagesize:obj.limit},
+                            success : function(res){
+                                console.log(res)
+                                listCont.innerHTML = mm.renderHtml(html,res)
+                            },
+                            error: function(res){
+                                console.log(res);
+                            }
+                        })
+
+                    }
+                });
+                //listCont.innerHTML = mm.renderHtml(html,res)
+            },
+            error: function(res){
+                console.log(res);
+            }
+        })
+
+        /*laypage.render({
+            elem: 'demo0',
+            limit:3
+            , count:count//数据总数
+            , jump: function (obj, first) {
+                mm.request({
+                    url: '/getCommodity',
+                    data:{account:obj.curr,pagesize:obj.limit},
+                    success : function(res){
+                        console.log(res)
+                        listCont.innerHTML = mm.renderHtml(html,res)
+                    },
+                    error: function(res){
+                        console.log(res);
+                    }
+                })
+
+            }
+        });*/
 
 
         // 模版引擎导入
-        //  var html = demo.innerHTML;
-        //  var listCont = document.getElementById('list-cont');
-        //  // console.log(layui.router("#/about.html"))
-        // mm.request({
-        //     url: '../json/commodity.json',
-        //     success : function(res){
-        //       console.log(res)
-        //       listCont.innerHTML = mm.renderHtml(html,res)
-        //     },
-        //     error: function(res){
-        //       console.log(res);
-        //     }
-        //   })
+          var html = demo.innerHTML;
+          var listCont = document.getElementById('list-cont');
+          // console.log(layui.router("#/about.html"))
+
+
+
 
         $('.sort a').on('click', function () {
             $(this).addClass('active').siblings().removeClass('active');

@@ -64,12 +64,12 @@
       <div class="login-cont w1200">
         <div class="form-box">
           <form class="layui-form" action="">
-            <legend>手机号登录</legend>
+            <legend>邮箱登录</legend>
             <div class="layui-form-item">
               <div class="layui-inline iphone">
                 <div class="layui-input-inline">
                   <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
-                  <input type="email" name="email" id="email" lay-verify="required|email" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                  <input type="email" name="email" id="email" lay-verify="required|email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
                 </div>
               </div>
               <div class="layui-inline veri-code">
@@ -123,6 +123,27 @@
           form.verify(
               { email: [/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/, '邮箱格式不对']   }
           );
+        $.ajax(
+          {
+              type: "get",
+              url: "/ajaxtest",
+              datatype: "json",
+              success:function (data) {
+                  if (data.result=='SUCCESS') {
+                      setTimeout(function () {
+                          window.location.href = "/index.jsp";
+                      },1000)
+                  }
+                  else {
+                      lay.msg(data.errorMsg,{time: 1000});
+                  }
+              },
+              error:function () {
+                  layer.msg("yichang");
+              }
+
+          }
+      );
 
         $("#find").click(function() {
             if(!/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test($("#email").val())){

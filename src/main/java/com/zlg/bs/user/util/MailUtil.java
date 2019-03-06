@@ -28,7 +28,7 @@ public class MailUtil {
         //接收者
         mainMessage.setTo(email);
         //发送的标题
-        mainMessage.setSubject("你登录的验证码");
+        mainMessage.setSubject("你登录需要的验证码");
         //发送的内容
         String code = VerifyCodeUtils.generateVerifyCode(4);
         mainMessage.setText(code);
