@@ -116,14 +116,16 @@
     </div>
   </div>
   <script type="text/javascript">
+
    layui.config({
       base: '/static/js/util' //你存放新模块的目录，注意，不是layui的模块目录
-    }).use(['jquery','form'],function(){
+    }).use(['jquery','form'],
+       function(){
           var $ = layui.$,form = layui.form;
           form.verify(
               { email: [/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/, '邮箱格式不对']   }
           );
-        $.ajax(
+       /* $.ajax(
           {
               type: "get",
               url: "/ajaxtest",
@@ -143,7 +145,7 @@
               }
 
           }
-      );
+      );*/
 
         $("#find").click(function() {
             if(!/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test($("#email").val())){

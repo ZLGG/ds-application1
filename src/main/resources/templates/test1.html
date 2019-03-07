@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<link rel="stylesheet" type="text/css" href="../static/css/main.css">-->
+    <link rel="stylesheet"  href="../static/layui/css/layui.css" media="all">
+    <script type="text/javascript" src="../static/layui/layui.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+</head>
+<body>
+<div class="col-sm-12">
+    <div class="input-group">
+        <span class="input-group-addon"> 新 密 码   :</span>
+        <input id="firstpwd" type="password" class="form-control" placeholder="请输入密码">
+    </div>
+</div>
+<div class="col-sm-12" style="margin-top: 10px">
+    <div class="input-group">
+        <span class="input-group-addon">确认密码:</span>
+        <input id="secondpwd" type="password" class="form-control" placeholder="请再输入一次密码">
+    </div>
+</div>
+<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">
+    <div class="layui-form-item">
+        <div class="layui-inline iphone">
+            <div class="layui-input-inline">
+                <input type="email" name="email" id="email" lay-verify="required|email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline veri-code">
+            <div class="layui-input-inline">
+                <input id="pnum" type="text" name="pnum" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <!--<label class="layui-form-label">商品名称</label>-->
+            <div class="layui-input-block">
+                <input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="请输入商品标题" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-input-block">
+                <input type="text" name="sellPrice" lay-verify="sellPrice" autocomplete="off" placeholder="请输入商品价格" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">是否允许退货</label>
+            <div class="layui-input-block">
+                <input type="radio" name="returnItem" value="是" title="是" checked placeholder="是">
+                <input type="radio" name="returnItem" value="否" title="否" placeholder="否">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">单选框</label>
+            <div class="layui-input-block">
+                <input type="radio" name="sex" value="nan" title="男">
+                <input type="radio" name="sex" value="nv" title="女" checked>
+                <input type="radio" name="sex" value="" title="中性" disabled>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-input-block">
+                <input type="text" name="allowReturnDay" lay-verify="allowReturnDay" autocomplete="off" placeholder="允许退货时间" class="layui-input">
+            </div>
+        </div>
+        <!--<select name="city" lay-verify="" lay-search>
+            <option value="010">layer</option>
+            <option value="021">form</option>
+            <option value="0571" selected>layim</option>
+            ……
+        </select>-->
+        <div class="layui-inline">
+            <label class="layui-form-label">选择类目</label>
+            <div class="layui-input-inline">
+                <select name="modules" lay-verify="required" lay-search="" lay-filter="aihao">
+                    <option value="">""</option>
+                    <option value="1">layer</option>
+                    <option value="2">form</option>
+                    <option value="3">layim</option>
+                    <option value="4">element</option>
+                    <option value="5">laytpl</option>
+                    <option value="6">upload</option>
+                    <option value="7">laydate</option>
+                    <option value="8">laypage</option>
+                    <option value="9">flow</option>
+                    <option value="10">util</option>
+                    <option value="11">code</option>
+                    <option value="12">tree</option>
+                    <option value="13">layedit</option>
+                    <option value="14">nav</option>
+                    <option value="15">tab</option>
+                    <option value="16">table</option>
+                    <option value="17">select</option>
+                    <option value="18">checkbox</option>
+                    <option value="19">switch</option>
+                    <option value="20">radio</option>
+                </select>
+            </div>
+        </div>
+        </div>
+</div>
+<!--<script src="../static/layui/layui.js"></script>
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form;
+        form.render('select','aihao');
+        //……
+
+    });
+</script>-->
+
+<!--<div class="content content-nav-base  login-content">
+    <div class="login-bg">
+        <div class="login-cont w1200">
+            <div class="form-box">
+                <form class="layui-form" action="">
+                    <legend>邮箱登录</legend>
+                    <div class="layui-form-item">
+                        <div class="layui-inline iphone">
+                            <div class="layui-input-inline">
+                                <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
+                                <input type="email" name="email" id="email" lay-verify="required|email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline veri-code">
+                            <div class="layui-input-inline">
+                                <input id="pnum" type="text" name="pnum" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                                <input type="button" class="layui-btn" id="find"  value="验证码" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item login-btn">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit="" lay-filter="demo1" >登录</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>-->
+</body>
+</html>

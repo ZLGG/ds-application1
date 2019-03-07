@@ -60,7 +60,7 @@
       <div class="inner-cont0">
         <div class="inner-cont1 w1200">
           <div class="inner-cont2">
-            <a href="commodity.html" class="active">所有商品</a>
+            <a href="/test/commodity" class="active">所有商品</a>
             <a href="buytoday.html">今日团购</a>
             <a href="information.html">母婴资讯</a>
             <a href="about.html">关于我们</a>
@@ -78,7 +78,7 @@
             <ul class="normal-nav layui-clear">
               <li class="nav-item">
                 <div class="title">奶粉辅食</div>
-                <p><a href="#">奶粉</a><a href="#">捕食</a><a href="#">营养品</a></p>
+                <p><a href="javascript:;">奶粉</a><a href="#">捕食</a><a href="#">营养品</a></p>
                 <i class="layui-icon layui-icon-right"></i>
               </li>
               <li class="nav-item">

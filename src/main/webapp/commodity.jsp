@@ -78,7 +78,7 @@
                 <div class="list-box">
                     <dl>
                         <dt>奶粉辅食</dt>
-                        <dd><a href="javascript:;">进口奶粉</a></dd>
+                        <dd><a href="javascript:;" onclick="getCatalogItem('catalog')">进口奶粉</a></dd>
                         <dd><a href="javascript:;">宝宝辅食</a></dd>
                         <dd><a href="javascript:;">营养品</a></dd>
                     </dl>
@@ -108,6 +108,14 @@
                         <dd><a href="javascript:;">孕妇护肤</a></dd>
                         <dd><a href="javascript:;">孕妇用品</a></dd>
                     </dl>
+                    <c:forEach items="" var="">
+                        <dl>
+                            <dt>奶粉辅食</dt>
+                            <dd><a href="javascript:;" onclick="getCatalogItem('catalog')">进口奶粉</a></dd>
+                            <dd><a href="javascript:;">宝宝辅食</a></dd>
+                            <dd><a href="javascript:;">营养品</a></dd>
+                        </dl>
+                    </c:forEach>
                 </div>
             </div>
             <div class="right-cont-wrap">
@@ -322,11 +330,34 @@
     //var count;
     layui.config({
         base: '/static/js/util/'   //你存放新模块的目录，注意，不是layui的模块目录
-    }).use(['mm', 'laypage', 'jquery'], function () {
+    }).use(['mm', 'laypage', 'jquery'],
+        function () {
         var laypage = layui.laypage,
             $ = layui.$,
             mm = layui.mm;
 
+        //请求分类
+            $.ajax(
+                {
+                    type: "get",
+                    url: "/getCatalog",
+                    datatype: "json",
+                    success:function (data) {
+                        if (data.result=='SUCCESS') {
+                            /*setTimeout(function () {
+                                window.location.href = "/index.jsp";
+                            },1000)*/
+                        }
+                        else {
+                            lay.msg(data.errorMsg,{time: 1000});
+                        }
+                    },
+                    error:function () {
+                        layer.msg("yichang");
+                    }
+
+                }
+            );
         mm.request({
             url: '/getCount',
             //ata:{account:obj.curr,pagesize:obj.limit},
@@ -402,6 +433,95 @@
         })
 
     });
+
+    function getCatalogItem(catalog) {
+        layui.config({
+            base: '/static/js/util/'   //你存放新模块的目录，注意，不是layui的模块目录
+        }).use(['mm', 'laypage', 'jquery'],
+            function () {
+                var laypage = layui.laypage,
+                    $ = layui.$,
+                    mm = layui.mm;
+
+                mm.request({
+                    url: '/getCount1',
+                    //data:{account:obj.curr,pagesize:obj.limit},
+                    data:{catalog:catalog},
+                    success : function(res){
+                        console.log(res)
+                        //count = res.count;
+                        laypage.render({
+                            elem: 'demo0',
+                            limit:3
+                            , count:res.count//数据总数
+                            , jump: function (obj, first) {
+                                mm.request({
+                                    url: '/getCommodity1',
+                                    data:{account:obj.curr,pagesize:obj.limit,catalog:catalog},
+                                    success : function(res){
+                                        console.log(res)
+                                        listCont.innerHTML = mm.renderHtml(html,res)
+                                    },
+                                    error: function(res){
+                                        console.log(res);
+                                    }
+                                })
+
+                            }
+                        });
+                        //listCont.innerHTML = mm.renderHtml(html,res)
+                    },
+                    error: function(res){
+                        console.log(res);
+                    }
+                })
+
+                /*laypage.render({
+                    elem: 'demo0',
+                    limit:3
+                    , count:count//数据总数
+                    , jump: function (obj, first) {
+                        mm.request({
+                            url: '/getCommodity',
+                            data:{account:obj.curr,pagesize:obj.limit},
+                            success : function(res){
+                                console.log(res)
+                                listCont.innerHTML = mm.renderHtml(html,res)
+                            },
+                            error: function(res){
+                                console.log(res);
+                            }
+                        })
+
+                    }
+                });*/
+
+
+                // 模版引擎导入
+                var html = demo.innerHTML;
+                var listCont = document.getElementById('list-cont');
+                // console.log(layui.router("#/about.html"))
+
+
+
+
+                $('.sort a').on('click', function () {
+                    $(this).addClass('active').siblings().removeClass('active');
+                })
+                $('.list-box dt').on('click', function () {
+                    if ($(this).attr('off')) {
+                        $(this).removeClass('active').siblings('dd').show()
+                        $(this).attr('off', '')
+                    } else {
+                        $(this).addClass('active').siblings('dd').hide()
+                        $(this).attr('off', true)
+                    }
+                })
+
+            });
+
+    }
+
 </script>
 
 
