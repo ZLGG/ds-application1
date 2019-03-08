@@ -125,35 +125,46 @@
     <div class="layui-tab layui-tab-card site-demo-button" style="position: relative;" >
         <ul class="layui-nav layui-nav-tree layui-nav-side" style="top: 60px;">
             <li class="layui-nav-item layui-nav-itemed">
-                <a href="javascript:;">默认展开</a>
+                <a href="javascript:;">用户管理</a>
                 <dl class="layui-nav-child">
                     <dd>
-                        <a data-url="/test/jiaose" data-id="11" data-title="选项a" href="#" class="site-demo-active" data-type="tabAdd">选项a</a>
+                        <a data-url="/test/jiaose" data-id="11" data-title="用户列表" href="#" class="site-demo-active" data-type="tabAdd">用户列表</a>
+                    </dd>
+                    <dd>
+                        <a href="#" data-url="/test/zhanghao" data-title="添加用户"  data-id="22" class="site-demo-active" data-type="tabAdd">选项b</a>
                     </dd>
                     <dd>
                         <a href="#" data-url="/test/zhanghao" data-title="选项b"  data-id="22" class="site-demo-active" data-type="tabAdd">选项b</a>
                     </dd>
-                    <dd>
-                        <a href="">跳转</a>
-                    </dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:;">解决方案</a>
+                <a href="javascript:;">商品管理</a>
                 <dl class="layui-nav-child">
                     <dd>
-                        <a href="">移动模块</a>
+                        <a data-url="/test/jiaose" data-id="11" data-title="商品列表" href="#" class="site-demo-active" data-type="tabAdd">商品列表</a>
                     </dd>
                     <dd>
-                        <a href="">后台模版</a>
+                        <a href="#" data-url="/test/zhanghao" data-title="添加商品"  data-id="22" class="site-demo-active" data-type="tabAdd">添加商品</a>
                     </dd>
                     <dd>
-                        <a href="">电商平台</a>
+                        <a href="#" data-url="/test/zhanghao" data-title="选项b"  data-id="22" class="site-demo-active" data-type="tabAdd">选项b</a>
                     </dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="#" data-url="c" data-title="选项c"  data-id="33" class="site-demo-active" data-type="tabAdd">产品c</a>
+                <a href="javascript:;">分类管理</a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a data-url="/test/jiaose" data-id="11" data-title="分类列表" href="#" class="site-demo-active" data-type="tabAdd">分类列表</a>
+                    </dd>
+                    <dd>
+                        <a href="#" data-url="/test/zhanghao" data-title="添加分类"  data-id="22" class="site-demo-active" data-type="tabAdd">添加分类</a>
+                    </dd>
+                    <dd>
+                        <a href="#" data-url="/test/zhanghao" data-title="选项b"  data-id="22" class="site-demo-active" data-type="tabAdd">选项b</a>
+                    </dd>
+                </dl>
             </li>
             <li class="layui-nav-item">
                 <a href="">大数据</a>

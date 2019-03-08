@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <title>Title</title>
@@ -16,11 +17,20 @@
 </head>
 <body>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail"><i class="layui-icon">&#xe60a;</i></a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
 </script>
-
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+</div>
     <!-- 内容主体区域 -->
     <div style="padding: 15px;">
         <table class="layui-hide" id="demo" lay-filter="test"></table>
@@ -37,7 +47,7 @@
     });*/
     //JavaScript代码区域
 
-        layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
+        layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider','jquery'], function(){
             var laydate = layui.laydate //日期
                 ,laypage = layui.laypage //分页
                 ,layer = layui.layer //弹层
@@ -46,6 +56,7 @@
                 ,upload = layui.upload //上传
                 ,element = layui.element //元素操作
                 ,slider = layui.slider //滑块
+                ,$ = layui.jquery
 
 
             //执行一个 table 实例
@@ -109,7 +120,53 @@
                 var data = obj.data //获得当前行数据
                     ,layEvent = obj.event; //获得 lay-event 对应的值
                 if(layEvent === 'detail'){
-                    layer.msg('查看操作'+obj.data);
+                    //layer.msg('查看操作'+obj.data.ciurPic);
+                    /*$.ajax(
+                        {
+                            type: "post",
+                            url: "/ajaxtest",
+                            datatype: "json",
+                            data:obj.data.field,
+                            success:function (data1) {
+                                if (data1.result=='SUCCESS') {
+                                    setTimeout(function () {
+                                        window.location.href = "/index.jsp";
+                                    },1000)
+                                }
+                                else {
+                                    lay.msg(data1.errorMsg,{time: 1000});
+                                }
+                            },
+                            error:function () {
+                                layer.msg("yichang");
+                            }
+
+                        }
+                    );*/
+                    layer.open({
+                        type: 2,
+                        area: [($(window).width()*0.9)+'px', ($(window).height() - 50) +'px'],
+                        fix: false, //不固定
+                        maxmin: true,
+                        shadeClose: true,
+                        shade:0.4,
+                        title: "编辑",
+                        content: '/test/admin-add',
+                        success: function(){
+                            //窗口加载成功刷新frame
+                            // location.replace(location.href);
+                        },
+                        cancel:function(){
+                            //关闭窗口之后刷新frame
+                            // location.replace(location.href);
+                        },
+                        end:function(){
+                            //窗口销毁之后刷新frame
+                            // location.replace(location.href);
+                        }
+                    });
+                 // x_admin_show('商城首页','/test/index');
+                    testShow()
                 } else if(layEvent === 'del'){
                     layer.confirm('真的删除行么', function(index){
                         obj.del(); //删除对应行（tr）的DOM结构
@@ -190,6 +247,91 @@
         var element = layui.element;
 
     });*/
+    function x_admin_show(title,url,w,h){
+        if (title == null || title == '') {
+            title=false;
+        };
+        if (url == null || url == '') {
+            url="404.html";
+        };
+        if (w == null || w == '') {
+            w=($(window).width()*0.9);
+        };
+        if (h == null || h == '') {
+            h=($(window).height() - 50);
+        };
+        layer.open({
+            type: 2,
+            area: [w+'px', h +'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shadeClose: true,
+            shade:0.4,
+            title: title,
+            content: url,
+            success: function(){
+                //窗口加载成功刷新frame
+                // location.replace(location.href);
+            },
+            cancel:function(){
+                //关闭窗口之后刷新frame
+                // location.replace(location.href);
+            },
+            end:function(){
+                //窗口销毁之后刷新frame
+                // location.replace(location.href);
+            }
+        });
+    }
+
+    function testShow(){
+        /*$.ajax(
+                        {
+                            type: "post",
+                            url: "/ajaxtest",
+                            datatype: "json",
+                            data:obj.data.field,
+                            success:function (data1) {
+                                if (data1.result=='SUCCESS') {
+                                    setTimeout(function () {
+                                        window.location.href = "/index.jsp";
+                                    },1000)
+                                }
+                                else {
+                                    lay.msg(data1.errorMsg,{time: 1000});
+                                }
+                            },
+                            error:function () {
+                                layer.msg("yichang");
+                            }
+
+                        }
+                    );*/
+        layer.open({
+            type: 2,
+            area: [($(window).width() * 0.9) + 'px', ($(window).height() - 50) + 'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shadeClose: true,
+            shade: 0.4,
+            title: "编辑",
+            content: '/test/index',
+            success: function () {
+                //窗口加载成功刷新frame
+                // location.replace(location.href);
+            },
+            cancel: function () {
+                //关闭窗口之后刷新frame
+                // location.replace(location.href);
+            },
+            end: function () {
+                //窗口销毁之后刷新frame
+                // location.replace(location.href);
+            }
+        });
+    }
+
+
 
 </script>
 </body>

@@ -21,7 +21,7 @@ public class ItemController {
         String pagesize = request.getParameter("pagesize");
         return "{\n" +
                 "  \"status\":0,\n" +
-               // "  \"count\":200,\n" +
+                "  \"count\":150,\n" +
                 "  \"menu\":\n" +
                 "    {\"milk\":{\n" +
                 "        \"content\":[\n" +
@@ -108,7 +108,10 @@ public class ItemController {
 
     @ResponseBody
     @RequestMapping("/ajaxtest")
-    public ResponseDto ajaxtest() {
+    public ResponseDto ajaxtest(Item item) {
+        if (item != null) {
+            System.out.println(item.toString());
+        }
         return new ResponseDto("success");
     }
 

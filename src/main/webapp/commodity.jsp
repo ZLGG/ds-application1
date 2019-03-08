@@ -108,14 +108,14 @@
                         <dd><a href="javascript:;">孕妇护肤</a></dd>
                         <dd><a href="javascript:;">孕妇用品</a></dd>
                     </dl>
-                    <c:forEach items="" var="">
+                    <%--<c:forEach items="" var="">
                         <dl>
                             <dt>奶粉辅食</dt>
                             <dd><a href="javascript:;" onclick="getCatalogItem('catalog')">进口奶粉</a></dd>
                             <dd><a href="javascript:;">宝宝辅食</a></dd>
                             <dd><a href="javascript:;">营养品</a></dd>
                         </dl>
-                    </c:forEach>
+                    </c:forEach>--%>
                 </div>
             </div>
             <div class="right-cont-wrap">
@@ -389,6 +389,25 @@
                 console.log(res);
             }
         })
+            /*laypage.render({
+                elem: 'demo0',
+                limit:3
+                //, count:res.count//数据总数
+                , jump: function (obj, first) {
+                    mm.request({
+                        url: '/getCommodity',
+                        data:{account:obj.curr,pagesize:obj.limit},
+                        success : function(res){
+                            console.log(res);
+                            listCont.innerHTML = mm.renderHtml(html,res)
+                        },
+                        error: function(res){
+                            console.log(res);
+                        }
+                    })
+
+                }
+            });*/
 
         /*laypage.render({
             elem: 'demo0',
