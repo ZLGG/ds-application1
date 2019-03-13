@@ -1,6 +1,26 @@
 package com.zlg.bs.vo;
 
 public class Item {
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private String catalog;
+
+    public String getCatalog() {
+        return catalog;
+    }
+
+    public void setCatalog(String catalog) {
+        this.catalog = catalog;
+    }
+
     //图片url
     private String img;
     //商品标题

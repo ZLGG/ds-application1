@@ -12,15 +12,21 @@
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
     <script type="text/javascript" src="/layui/layui.js"></script>
+    <script type="text/javascript" src="/static/js/xadmin.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 </head>
 <body>
 <script type="text/html" id="barDemo">
     <%--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail"><i class="layui-icon">&#xe60a;</i></a>--%>
-    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
+   <%-- <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>--%>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
 </script>
+<%--<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn" onclick="x_admin_sho('添加类目','/test/catalog-add')"><i class="layui-icon"></i>添加</button>
+    </div>
+</script>--%>
 <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
@@ -34,10 +40,12 @@
 <!-- 内容主体区域 -->
 <div style="padding: 15px;">
     <table class="layui-hide" id="demo" lay-filter="test"></table>
-
 </div>
 <script src="/static/layui/layui.js"></script>
 <script>
+    layui.config({
+        base: '/static/js/'
+    }).use('admin');
     /*layui.config({
         base:'/static/js/util'
     }).use(['jquery','form'],
@@ -57,13 +65,43 @@
             ,upload = layui.upload //上传
             ,element = layui.element //元素操作
             ,slider = layui.slider //滑块
-            ,$ = layui.jquery;
+            ,$ = layui.jquery
 
-        //获取所有分类
+
+        //执行一个 table 实例
+        table.render({
+            elem: '#demo'
+            ,height: 420
+            ,url: '/getItemList' //数据接口
+            ,title: '商品分类表'
+            ,page: true //开启分页
+            ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+            //,totalRow: true //开启合计行
+            ,cols: [[ //表头
+                {type: 'checkbox', fixed: 'left'}
+                // ,{field: 'id', title: 'ID', width:80, sort: true, fixed: 'left', totalRowText: '合计：'}
+                ,{field: 'code', title: '编码', width:80}
+                ,{field: 'name', title: '类目', width:80}
+                ,{field: 'parentCatalog', title: '父类目', width: 90}
+               // ,{field: 'OriPic', title: '原价', width:80, sort: true}
+                /*,{field: 'score', title: '评分', width: 80, sort: true, totalRow: true}
+                ,{field: 'city', title: '城市', width:150}
+                ,{field: 'sign', title: '签名', width: 200}
+                ,{field: 'classify', title: '职业', width: 100}
+                ,{field: 'wealth', title: '财富', width: 135, sort: true, totalRow: true}
+                ,{field: 'color', title:'颜色',width: 80}
+                ,{field: 'ciurPic', title:'价格',width: 80}
+                ,{field: 'img', title:'图片',width: 80}
+                ,{field: 'discount', title:'折扣',width: 80}*/
+                ,{field: 'right', width: 60, align:'center', toolbar: '#barDemo'}
+            ]]
+        });
+
+        //获取一级分类
         $.ajax(
             {
                 type: "get",
-                url: "/getCatalog",
+                url: "/getTopCatalog",
                 datatype: "json",
                 success: function (data) {
                     if (data.result == 'SUCCESS') {
@@ -81,38 +119,6 @@
 
             }
         );
-
-
-        //执行一个 table 实例
-        table.render({
-            elem: '#demo'
-            ,height: 420
-            ,url: '/getItemList' //数据接口
-            ,title: '商品表'
-            ,page: true //开启分页
-            ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-            ,totalRow: true //开启合计行
-            ,cols: [[ //表头
-                {type: 'checkbox', fixed: 'left'}
-                // ,{field: 'id', title: 'ID', width:80, sort: true, fixed: 'left', totalRowText: '合计：'}
-                ,{field: 'title', title: '商品', width:80}
-                ,{field: 'catalog', title: '类目', width:80, sort: true}
-                ,{field: 'ciurPic', title: '现价', width: 90, sort: true }
-                ,{field: 'OriPic', title: '原价', width:80, sort: true}
-                ,{field: 'discount', title:'折扣',width: 100}
-                /*,{field: 'score', title: '评分', width: 80, sort: true, totalRow: true}
-                ,{field: 'city', title: '城市', width:150}
-                ,{field: 'sign', title: '签名', width: 200}
-                ,{field: 'classify', title: '职业', width: 100}
-                ,{field: 'wealth', title: '财富', width: 135, sort: true, totalRow: true}
-                ,{field: 'color', title:'颜色',width: 80}
-                ,{field: 'ciurPic', title:'价格',width: 80}
-                ,{field: 'img', title:'图片',width: 80}
-                ,{field: 'discount', title:'折扣',width: 80}*/
-                ,{field: 'right', width: 160, align:'center', toolbar: '#barDemo'}
-            ]]
-        });
-
         //监听头工具栏事件
         table.on('toolbar(test)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id)
@@ -128,8 +134,8 @@
                         maxmin: true,
                         shadeClose: true,
                         shade: 0.4,
-                        title: "添加商品",
-                        content: '/test/item-add',
+                        title: "添加商品分类",
+                        content: '/test/catalog-add',
                         success: function () {
                             //窗口加载成功刷新frame
                             // location.replace(location.href);
@@ -150,9 +156,9 @@
                     } else if(data.length > 1){
                         layer.msg('只能同时编辑一个');
                     } else {
-                        //layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
+                        layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
                         //根据id请求接口获取数据，弹出窗口回显
-                        layer.open({
+                     /*   layer.open({
                             type: 2,
                             area: [($(window).width() * 0.9) + 'px', ($(window).height() - 50) + 'px'],
                             fix: false, //不固定
@@ -173,7 +179,7 @@
                                 //窗口销毁之后刷新frame
                                 // location.replace(location.href);
                             }
-                        });
+                        });*/
                     }
                     break;
                 case 'delete':
@@ -214,28 +220,28 @@
 
                     }
                 );*/
-               /* layer.open({
-                    type: 2,
-                    area: [($(window).width()*0.9)+'px', ($(window).height() - 50) +'px'],
-                    fix: false, //不固定
-                    maxmin: true,
-                    shadeClose: true,
-                    shade:0.4,
-                    title: "查看",
-                    content: '/test/admin-add',
-                    success: function(){
-                        //窗口加载成功刷新frame
-                        // location.replace(location.href);
-                    },
-                    cancel:function(){
-                        //关闭窗口之后刷新frame
-                        // location.replace(location.href);
-                    },
-                    end:function(){
-                        //窗口销毁之后刷新frame
-                        // location.replace(location.href);
-                    }
-                });*/
+                /* layer.open({
+                     type: 2,
+                     area: [($(window).width()*0.9)+'px', ($(window).height() - 50) +'px'],
+                     fix: false, //不固定
+                     maxmin: true,
+                     shadeClose: true,
+                     shade:0.4,
+                     title: "查看",
+                     content: '/test/admin-add',
+                     success: function(){
+                         //窗口加载成功刷新frame
+                         // location.replace(location.href);
+                     },
+                     cancel:function(){
+                         //关闭窗口之后刷新frame
+                         // location.replace(location.href);
+                     },
+                     end:function(){
+                         //窗口销毁之后刷新frame
+                         // location.replace(location.href);
+                     }
+                 });*/
                 // x_admin_show('商城首页','/test/index');
                 testShow()
             } else if(layEvent === 'del'){
@@ -325,7 +331,7 @@
         var element = layui.element;
 
     });*/
-    function x_admin_show(title,url,w,h){
+    function x_admin_sho(title,url,w,h){
         if (title == null || title == '') {
             title=false;
         };

@@ -353,7 +353,7 @@
                         }
                     },
                     error:function () {
-                        layer.msg("yichang");
+                        layer.msg("商品分类获取失败");
                     }
 
                 }

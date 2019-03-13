@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>layout 后台大布局 - Layui</title>
     <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/js/admin.js">
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -38,8 +39,17 @@
                     贤心
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
+                    <%--<dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>--%>
+                        <dd>
+                            <a onclick="WeAdminShow('个人信息','http://www.baidu.com')">个人信息</a>
+                        </dd>
+                        <dd>
+                            <a onclick="WeAdminShow('切换帐号','/test/back-login')">切换帐号</a>
+                        </dd>
+                        <dd>
+                            <a class="loginout" href="/test/back-login">退出</a>
+                        </dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="">退了</a></li>
@@ -124,17 +134,14 @@
     </div>--%>
     <div class="layui-tab layui-tab-card site-demo-button" style="position: relative;" >
         <ul class="layui-nav layui-nav-tree layui-nav-side" style="top: 60px;">
-            <li class="layui-nav-item layui-nav-itemed">
+            <li class="layui-nav-item <%--layui-nav-itemed--%>">
                 <a href="javascript:;">用户管理</a>
                 <dl class="layui-nav-child">
                     <dd>
-                        <a data-url="/test/jiaose" data-id="11" data-title="用户列表" href="#" class="site-demo-active" data-type="tabAdd">用户列表</a>
+                        <a data-url="/test/member-list1" data-id="11" data-title="用户列表" href="#" class="site-demo-active" data-type="tabAdd">用户列表</a>
                     </dd>
                     <dd>
-                        <a href="#" data-url="/test/zhanghao" data-title="添加用户"  data-id="22" class="site-demo-active" data-type="tabAdd">选项b</a>
-                    </dd>
-                    <dd>
-                        <a href="#" data-url="/test/zhanghao" data-title="选项b"  data-id="22" class="site-demo-active" data-type="tabAdd">选项b</a>
+                        <a href="#" data-url="/test/jiaose" data-title="添加用户"  data-id="24" class="site-demo-active" data-type="tabAdd">选项b</a>
                     </dd>
                 </dl>
             </li>
@@ -142,32 +149,29 @@
                 <a href="javascript:;">商品管理</a>
                 <dl class="layui-nav-child">
                     <dd>
-                        <a data-url="/test/jiaose" data-id="11" data-title="商品列表" href="#" class="site-demo-active" data-type="tabAdd">商品列表</a>
+                        <a data-url="/test/item-list" data-id="12" data-title="商品列表" href="#" class="site-demo-active" data-type="tabAdd">商品列表</a>
                     </dd>
                     <dd>
-                        <a href="#" data-url="/test/zhanghao" data-title="添加商品"  data-id="22" class="site-demo-active" data-type="tabAdd">添加商品</a>
-                    </dd>
-                    <dd>
-                        <a href="#" data-url="/test/zhanghao" data-title="选项b"  data-id="22" class="site-demo-active" data-type="tabAdd">选项b</a>
+                        <a href="#" data-url="/test/catalog-list" data-title="类目列表"  data-id="22" class="site-demo-active" data-type="tabAdd">类目列表</a>
                     </dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:;">分类管理</a>
+                <a href="javascript:;">订单管理</a>
                 <dl class="layui-nav-child">
                     <dd>
-                        <a data-url="/test/jiaose" data-id="11" data-title="分类列表" href="#" class="site-demo-active" data-type="tabAdd">分类列表</a>
+                        <a data-url="/test/order-list" data-id="28" data-title="全部订单" href="#" class="site-demo-active" data-type="tabAdd">全部订单</a>
                     </dd>
-                    <dd>
-                        <a href="#" data-url="/test/zhanghao" data-title="添加分类"  data-id="22" class="site-demo-active" data-type="tabAdd">添加分类</a>
-                    </dd>
-                    <dd>
-                        <a href="#" data-url="/test/zhanghao" data-title="选项b"  data-id="22" class="site-demo-active" data-type="tabAdd">选项b</a>
-                    </dd>
+
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="">大数据</a>
+                <a href="javascript:;">管理员管理</a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a data-url="/test/admin-list" data-id="29" data-title="管理员列表" href="#" class="site-demo-active" data-type="tabAdd">管理员列表</a>
+                    </dd>
+                </dl>
             </li>
         </ul>
 
@@ -175,8 +179,8 @@
             <ul class="layui-tab-title">
             </ul>
             <ul class="rightmenu" style="display: none;position: absolute;">
-                <li data-type="closethis">关闭当前</li>
-                <li data-type="closeall">关闭所有</li>
+                    <li data-type="closethis">关闭当前</li>
+                    <li data-type="closeall">关闭所有</li>
             </ul>
             <div class="layui-tab-content">
             </div>
@@ -195,9 +199,13 @@
 </div>
 <script src="/static/layui/layui.js"></script>
 <script>
+    layui.config({
+        base: '/static/js/'
+    }).use('admin');
     //JavaScript代码区域
-    layui.use('element', function() {
+    layui.use(['layer','element'], function() {
         var $ = layui.jquery;
+        layui.layer;
         var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
         //触发事件
@@ -302,7 +310,9 @@
         $(window).resize(function () {
             FrameWH();
         })
+
     });
+
 </script>
 </body>
 </html>

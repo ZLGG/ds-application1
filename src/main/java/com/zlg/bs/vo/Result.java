@@ -1,5 +1,7 @@
 package com.zlg.bs.vo;
 
+import java.util.concurrent.CountDownLatch;
+
 /*
 * 返回服务器结果
 * 200成功  400失败
@@ -8,10 +10,17 @@ public class Result<T> {
     private Integer code;
     private String message;
     private T data;
+    private int count;
     public Result(Integer code, String message, T data){
         this.code = code;
         this.message = message;
         this.data = data;
+    }
+    public Result(Integer code, String message, T data,int count){
+        this.code = code;
+        this.message = message;
+        this.data = data;
+        this.count = count;
     }
     public Result(){}
 
@@ -37,6 +46,14 @@ public class Result<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }
 

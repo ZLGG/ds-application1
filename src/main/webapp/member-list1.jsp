@@ -48,22 +48,22 @@
             <th lay-data="{type:'checkbox'}">ID</th>
             <th lay-data="{field:'id', width:80, sort: true}">ID</th>
             <th lay-data="{field:'username', width:120, sort: true, edit: 'text'}">用户名</th>
-            <th lay-data="{field:'email', edit: 'text', minWidth: 150}">邮箱</th>
+            <th lay-data="{field:'email', minWidth: 80, width:120}">邮箱</th>
             <th lay-data="{field:'sex', width:80,templet: '#switchTpl'}">性别</th>
-            <th lay-data="{field:'city', edit: 'text', minWidth: 100}">城市</th>
-            <th lay-data="{field:'experience', sort: true, edit: 'text'}">积分</th>
+              <th lay-data="{field:'createTime',  minWidth: 100,width:120}">创建时间</th>
+              <%--<th lay-data="{field:'experience', sort: true, edit: 'text'}">积分</th>--%>
           </tr>
         </thead>
       </table>
 
     </div>
-    <script type="text/html" id="toolbarDemo">
+    <%--<script type="text/html" id="toolbarDemo">
       <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
         <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
         <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
       </div>
-    </script>
+    </script>--%>
     <script type="text/html" id="switchTpl">
       <!-- 这里的 checked 的状态只是演示 -->
       <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.id == 10003 ? 'checked' : '' }}>
@@ -95,24 +95,7 @@
         ,data = obj.data //得到所在行所有键值
         ,field = obj.field; //得到字段
         layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
-      });
-
-      //头工具栏事件
-      table.on('toolbar(test)', function(obj){
-        var checkStatus = table.checkStatus(obj.config.id);
-        switch(obj.event){
-          case 'getCheckData':
-            var data = checkStatus.data;
-            layer.alert(JSON.stringify(data));
-          break;
-          case 'getCheckLength':
-            var data = checkStatus.data;
-            layer.msg('选中了：'+ data.length + ' 个');
-          break;
-          case 'isAll':
-            layer.msg(checkStatus.isAll ? '全选': '未全选');
-          break;
-        };
+        //调用ajax修改
       });
     });
     </script>

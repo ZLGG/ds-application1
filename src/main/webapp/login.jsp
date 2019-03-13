@@ -196,13 +196,8 @@
             $.ajax({
                 url:"/login",
                 data:data.field,
-               /* contentType:'application/json:charset=utf-8',*/
                 dataType:"json",
                 type:'post',
-               /* headers: {
-                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrZW4iLCJpYXQiOjE1Mzc1NTQzMDksImRhdGEiOnsidXNlcm5hbWUiOiJ4dXRvbmdiYW8iLCJpc19zdXBlcnVzZXIiOjEsImlkIjoxNywibG9naW5fdGltZSI6MTUzNzU1NDMwOX0sImV4cCI6MTUzODE1NDMwOX0.32Lys4hjjY2XRpM2r9YSmpYA798u821m_M5Tzb6wxIU",
-                    'Content-Type': 'application/x-www-form-urlencoded'  //multipart/form-data;boundary=--xxxxxxx   application/json
-                },*/
                 success:function (result) {
                     if (result.result=='SUCCESS'){
                         //layer.msg(data1.data, 1000);

@@ -31,6 +31,40 @@
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
 </div>
+<div class="layui-row">
+    <form class="layui-form layui-col-md12 x-so">
+        <input class="layui-input" placeholder="开始日" name="start" id="start">
+        <input class="layui-input" placeholder="截止日" name="end" id="end">
+        <div class="layui-input-inline">
+            <select name="contrller">
+                <option>支付状态</option>
+                <option>已支付</option>
+                <option>未支付</option>
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <select name="contrller">
+                <option>支付方式</option>
+                <option>支付宝</option>
+                <option>微信</option>
+                <option>货到付款</option>
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <select name="contrller">
+                <option value="">订单状态</option>
+                <option value="0">待确认</option>
+                <option value="1">已确认</option>
+                <option value="2">已收货</option>
+                <option value="3">已取消</option>
+                <option value="4">已完成</option>
+                <option value="5">已作废</option>
+            </select>
+        </div>
+        <input type="text" name="username"  placeholder="请输入订单号" autocomplete="off" class="layui-input">
+        <button class="layui-btn"  lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+    </form>
+</div>
     <!-- 内容主体区域 -->
     <div style="padding: 15px;">
         <table class="layui-hide" id="demo" lay-filter="test"></table>
@@ -191,7 +225,36 @@
                 }
             });
 
-
+            form.on('submit(search)',function (data) {
+                table.render({
+                    elem: '#order'
+                    ,height: 420
+                    ,url: '/getItemList' //数据接口
+                    ,title: '商品表'
+                    ,page: true //开启分页
+                    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+                    ,totalRow: true //开启合计行
+                    ,cols: [[ //表头
+                        {type: 'checkbox', fixed: 'left'}
+                        // ,{field: 'id', title: 'ID', width:80, sort: true, fixed: 'left', totalRowText: '合计：'}
+                        ,{field: 'title', title: '商品', width:80}
+                        ,{field: 'catalog', title: '分类', width:80, sort: true}
+                        ,{field: 'ciurPic', title: '现价', width: 90, sort: true }
+                        ,{field: 'OriPic', title: '原价', width:80, sort: true}
+                        ,{field: 'discount', title:'折扣',width: 100}
+                        /*,{field: 'score', title: '评分', width: 80, sort: true, totalRow: true}
+                        ,{field: 'city', title: '城市', width:150}
+                        ,{field: 'sign', title: '签名', width: 200}
+                        ,{field: 'classify', title: '职业', width: 100}
+                        ,{field: 'wealth', title: '财富', width: 135, sort: true, totalRow: true}
+                        ,{field: 'color', title:'颜色',width: 80}
+                        ,{field: 'ciurPic', title:'价格',width: 80}
+                        ,{field: 'img', title:'图片',width: 80}
+                        ,{field: 'discount', title:'折扣',width: 80}*/
+                        ,{field: 'right', width: 80, align:'center', toolbar: '#barDemo'}
+                    ]]
+                });
+            })
             slider.render({
                 elem: '#sliderDemo'
                 ,input: true //输入框
@@ -204,7 +267,7 @@
         });
 
 
-    function addItem() {
+   /* function addItem() {
         layer.open({
             id:1,
             type: 1,
@@ -242,7 +305,7 @@
             }
 
         });
-    }
+    }*/
     /*layui.use('element', function(){
         var element = layui.element;
 
