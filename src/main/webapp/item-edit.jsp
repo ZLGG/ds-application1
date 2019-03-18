@@ -9,8 +9,6 @@
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <link rel="stylesheet" href="/css/font.css">
     <link rel="stylesheet" type="text/css" href="/layui/css/layui.css">
-
-    
     <link rel="stylesheet" href="/css/xadmin.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="/layui/layui.js" charset="utf-8"></script>
@@ -32,15 +30,15 @@
             </label>
             <div class="layui-input-inline">
                 <select name="isDiscount" id="isDiscount">
-                    <option>普通商品</option>
-                    <option>9折商品</option>
-                    <option>8折商品</option>
-                    <option>7折商品</option>
-                    <option>6折商品</option>
-                    <option>5折商品</option>
-                    <option>4折商品</option>
-                    <option>3折商品</option>
-                    <option>2折商品</option>
+                    <option value="0">普通商品</option>
+                    <option value="9">9折商品</option>
+                    <option value="8">8折商品</option>
+                    <option value="7">7折商品</option>
+                    <option value="6">6折商品</option>
+                    <option value="5">5折商品</option>
+                    <option value="4">4折商品</option>
+                    <option value="3">3折商品</option>
+                    <option value="2">2折商品</option>
                 </select>
             </div>
         </div>
@@ -50,7 +48,7 @@
             </label>
             <div class="layui-input-inline">
                 <input type="text" id="title" name="title" required="" lay-verify="required"
-                       autocomplete="off" class="layui-input">
+                       autocomplete="off" class="layui-input" value="${sessionScope.item.title}">
             </div>
             <div class="layui-form-mid layui-word-aux">
                 <span class="x-red">*</span><%--将会成为您唯一的登入名--%>
@@ -77,7 +75,7 @@
             </label>
             <div class="layui-input-inline">
                 <input type="text" id="sellPrice" name="sellPrice" required="" lay-verify="required"
-                       autocomplete="off" class="layui-input">
+                       autocomplete="off" class="layui-input" value="${sessionScope.item.sellPrice}">
             </div>
             <div class="layui-form-mid layui-word-aux">
                 <span class="x-red">*</span><%--将会成为您唯一的登入名--%>
@@ -89,7 +87,7 @@
             </label>
             <div class="layui-input-inline">
                 <input type="text" id="color" name="color" required="" lay-verify="required"
-                       autocomplete="off" class="layui-input">
+                       autocomplete="off" class="layui-input" value="${sessionScope.item.color}">
             </div>
             <div class="layui-form-mid layui-word-aux">
                 <span class="x-red">*</span>
@@ -113,7 +111,7 @@
             </label>
             <div class="layui-input-inline">
                 <input type="text" id="imgUrl" name="imgUrl" required="" lay-verify="required"
-                       autocomplete="off" class="layui-input" >
+                       autocomplete="off" class="layui-input" value="${sessionScope.item.imgUrl}">
             </div>
             <div class="layui-form-mid layui-word-aux">
                 <span class="x-red">*</span>
@@ -152,16 +150,36 @@
             , upload = layui.upload
             , $ = layui.jquery
             , layer = layui.layer;
-        $.ajax(
+
+        var numbers = $("#isDiscount").find("option"); //获取select下拉框的所有值
+        for (var j = 1; j < numbers.length; j++) {
+            if ($(numbers[j]).val() == ${sessionScope.item.discount}) {
+                $(numbers[j]).attr("selected", "selected");
+            }
+        };
+        var numbers1 = $("#catalog").find("option"); //获取select下拉框的所有值
+        for (var j = 1; j < numbers1.length; j++) {
+            if ($(numbers1[j]).val() == ${sessionScope.item.catalog}) {
+                $(numbers1[j]).attr("selected", "selected");
+            }
+        };
+        var numbers2 = $("#isSellerFair").find("option"); //获取select下拉框的所有值
+        for (var j = 1; j < numbers2.length; j++) {
+            if ($(numbers2[j]).val() == ${sessionScope.item.isSellerFair}) {
+                $(numbers2[j]).attr("selected", "selected");
+            }
+        };
+
+        /*$.ajax(
             {
                 type: "get",
                 url: "/getCatalog",
                 datatype: "json",
                 success:function (data) {
                     if (data.result=='SUCCESS') {
-                        /* setTimeout(function () {
+                        /!* setTimeout(function () {
                              window.location.href = "/index.jsp";
-                         },1000)*/
+                         },1000)*!/
                         layer.msg(data);
                     }
                     else {
@@ -174,9 +192,9 @@
 
             }
         );
-
+*/
         //自定义验证规则
-        form.verify({
+      /*  form.verify({
             nikename: function(value){
                 if(value.length < 5){
                     return '昵称至少得5个字符啊';
@@ -188,7 +206,7 @@
                     return '两次密码不一致';
                 }
             }
-        });
+        });*/
 
         //监听提交
         form.on('submit(add)', function(data){

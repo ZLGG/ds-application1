@@ -25,29 +25,11 @@
 <div class="x-body">
     <form class="layui-form">
         <div class="layui-form-item">
-            <label for="isDiscount" class="layui-form-label">
-                <span class="x-red">*</span>商品类型
+            <label for="text" class="layui-form-label">
+                <span class="x-red">*</span>讯息
             </label>
             <div class="layui-input-inline">
-                <select name="isDiscount" id="isDiscount">
-                    <option value="0">普通商品</option>
-                    <option value="9">9折商品</option>
-                    <option value="8">8折商品</option>
-                    <option value="7">7折商品</option>
-                    <option value="6">6折商品</option>
-                    <option value="5">5折商品</option>
-                    <option value="4">4折商品</option>
-                    <option value="3">3折商品</option>
-                    <option value="2">2折商品</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="title" class="layui-form-label">
-                <span class="x-red">*</span>商品标题
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" id="title" name="title" required="" lay-verify="required"
+                <input type="text" id="text" name="text" required="" lay-verify="required"
                        autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid layui-word-aux">
@@ -55,62 +37,24 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="catalog" class="layui-form-label">
-                <span class="x-red">*</span>商品分类
+            <label for="infoCont" class="layui-form-label">
+                <span class="x-red">*</span>内容
             </label>
             <div class="layui-input-inline">
-                <select name="isDiscount" id="catalog">
-                    <c:forEach items="${sessionScope.catalog}" var="catalog">
-                        <option value="${catalog.id}">${catalog.name}</option>
-                    </c:forEach>
-                </select>
+                <input type="text" id="infoCont" name="infoCont" required="" lay-verify="required"
+                       autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid layui-word-aux">
                 <span class="x-red">*</span><%--将会成为您唯一的登入名--%>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="sellPrice" class="layui-form-label">
-                <span class="x-red">*</span>售价
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" id="sellPrice" name="sellPrice" required="" lay-verify="required"
-                       autocomplete="off" class="layui-input">
-            </div>
-            <div class="layui-form-mid layui-word-aux">
-                <span class="x-red">￥</span><%--将会成为您唯一的登入名--%>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="color" class="layui-form-label">
-                <span class="x-red">*</span>颜色
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" id="color" name="color" required="" lay-verify="required"
-                       autocomplete="off" class="layui-input">
-            </div>
-            <div class="layui-form-mid layui-word-aux">
-                <span class="x-red">*</span>
             </div>
         </div>
 
-        <div class="layui-form-item">
-            <label for="isSellerFair" class="layui-form-label">
-                <span class="x-red">*</span>是否卖家承担运费
-            </label>
-            <div class="layui-input-inline">
-                <select name="isSellerFair" id="isSellerFair">
-                    <option>是</option>
-                    <option>否</option>
-                </select>
-            </div>
-        </div>
         <div class="layui-form-item" hidden>
-            <label for="imgUrl" class="layui-form-label">
+            <label for="img" class="layui-form-label">
                 <span class="x-red">*</span>图片url
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="imgUrl" name="imgUrl" required="" lay-verify="required"
+                <input type="text" id="img" name="img" required="" lay-verify="required"
                        autocomplete="off" class="layui-input" >
             </div>
             <div class="layui-form-mid layui-word-aux">
@@ -147,30 +91,6 @@
             , upload = layui.upload
             , $ = layui.jquery
             , layer = layui.layer;
-        //获取所有类目
-        $.ajax(
-            {
-                type: "get",
-                url: "/getCatalog",
-                datatype: "json",
-                success:function (data) {
-                    if (data.result=='SUCCESS') {
-                       /* setTimeout(function () {
-                            window.location.href = "/index.jsp";
-                        },1000)*/
-                        layer.msg(data);
-                    }
-                    else {
-                        lay.msg(data.errorMsg,{time: 1000});
-                    }
-                },
-                error:function () {
-                    layer.msg("商品分类获取失败");
-                }
-
-            }
-        );
-
 
 
         //监听提交
@@ -180,7 +100,7 @@
             $.ajax(
                 {
                     type: "get",
-                    url: "/addItem",
+                    url: "/addInformation",
                     datatype: "json",
                     data:data.field,
                     success:function (data) {
@@ -189,23 +109,23 @@
                                  window.location.href = "/index.jsp";
                              },1000)*/
                             layer.msg(data);
-                           /* layer.alert("增加成功", {icon: 6},function () {
-                                // 获得frame索引
-                                var index = parent.layer.getFrameIndex(window.name);
-                                //关闭当前frame
+                            /* layer.alert("增加成功", {icon: 6},function () {
+                                 // 获得frame索引
+                                 var index = parent.layer.getFrameIndex(window.name);
+                                 //关闭当前frame
 
-                                //layer.closeAll('iframe'); //关闭所有的iframe层
-                                parent.layer.close(index);
-                                // 可以对父窗口进行刷新
-                                x_admin_father_reload();
-                            });*/
+                                 //layer.closeAll('iframe'); //关闭所有的iframe层
+                                 parent.layer.close(index);
+                                 // 可以对父窗口进行刷新
+                                 x_admin_father_reload();
+                             });*/
                         }
                         else {
                             lay.msg(data.errorMsg,{time: 1000});
                         }
                     },
                     error:function () {
-                        layer.msg("商品分类获取失败");
+                        layer.msg("提交失败");
                     }
 
                 }
@@ -218,7 +138,7 @@
                 //layer.closeAll('iframe'); //关闭所有的iframe层
                 parent.layer.close(index);
                 // 可以对父窗口进行刷新
-                  x_admin_father_reload();
+                x_admin_father_reload();
             });
             return false;
         });
@@ -226,8 +146,8 @@
         var uploadInst = upload.render({
             elem: '#test1'
             ,url: '/upload/'
-           // ,auto: false //选择文件后不自动上传
-           // ,bindAction: '#add' //指向一个按钮触发上传
+            // ,auto: false //选择文件后不自动上传
+            // ,bindAction: '#add' //指向一个按钮触发上传
             ,before: function(obj){
                 //预读本地文件示例，不支持ie8
                 obj.preview(function(index, file, result){

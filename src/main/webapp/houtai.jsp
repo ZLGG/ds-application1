@@ -166,6 +166,15 @@
                 </dl>
             </li>
             <li class="layui-nav-item">
+                <a href="javascript:;">资讯管理</a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a data-url="/test/information-list" data-id="30" data-title="资讯列表" href="#" class="site-demo-active" data-type="tabAdd">资讯列表</a>
+                    </dd>
+
+                </dl>
+            </li>
+            <li class="layui-nav-item">
                 <a href="javascript:;">管理员管理</a>
                 <dl class="layui-nav-child">
                     <dd>

@@ -7,13 +7,20 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.zlg.bs.vo.Constans;
+import com.zlg.bs.vo.Item;
+import com.zlg.bs.vo.Result;
+import com.zlg.bs.vo.ShopcartResultVo;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 @RestController
 public class TradeCtroller {
@@ -93,5 +100,49 @@ public class TradeCtroller {
         } else {
             System.out.println("调用失败");
         }
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/getOrderList")
+    public Result getOrderList(@RequestParam(name="id",required=false,defaultValue="0")String id
+            , @RequestParam(name="isPay",required=false,defaultValue="0")String isPay
+            , @RequestParam(name="start",required=false,defaultValue="0")String start
+            , @RequestParam(name="end",required=false,defaultValue="0")String end
+            , @RequestParam(name="status",required=false,defaultValue="0")String status) {
+        Item item = new Item();
+        if (id.equals("1")) {
+            item.setId("123");
+            item.setColor("hong");
+            item.setCiurPic("$200");
+            item.setImg("jfsfj");
+            item.setDiscount("5zhe");
+        } else {
+            item = new Item();
+            item.setId("4234");
+            item.setColor("fsf");
+            item.setCiurPic("$500");
+            item.setImg("/img/a.jpg");
+            item.setDiscount("6zhe");
+        }
+
+        ArrayList<Item> items = new ArrayList<>();
+        items.add(item);
+        if (id.equals("1")) {
+            return new Result(0,"chenggong",items,50);
+        }
+        return new Result(0,"chenggong",items,100);
+
+    }
+    @ResponseBody
+    @RequestMapping("/getFrontCart")
+    public String getFrontCart() {
+        List cartList = new ArrayList<Item>();
+
+        //ShopcartResultVo shopcartResultVo = new ShopcartResultVo();
+        return "{\n" +
+                "\t\"status\":0,\n" +
+                "  \"infoList\":[{\"img\":\"../res/img/paging_img1.jpg\",\"title\":\"宝宝T恤棉质小衫\",\"color\":\"粉色\",\"cm\":\"130\",\"price\":\"189.00\"},{\"img\":\"../res/img/paging_img2.jpg\",\"title\":\"宝宝T恤棉质小衫\",\"color\":\"粉色\",\"cm\":\"130\",\"price\":\"189.00\"},{\"img\":\"../res/img/paging_img3.jpg\",\"title\":\"宝宝T恤棉质小衫\",\"color\":\"粉色\",\"cm\":\"130\",\"price\":\"189.00\"}]\n" +
+                "}";
     }
 }

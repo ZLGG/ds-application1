@@ -63,7 +63,7 @@
     <div class="info-list-box">
       <div class="info-list w1200">
         <div class="item-box layui-clear" id="list-cont">
-          <div class="item">
+        <%--  <div class="item">
             <div class="img">
               <img src="/static/img/new1.jpg" alt="">
             </div>
@@ -222,14 +222,14 @@
               <p class="data">2016-12-24 16:33:26</p>
               <p class="info-cont">宝宝在周岁之前体质相对较弱，特别是薄弱肠道，一不注意就会拉肚子;那么宝宝消化不良拉肚子</p>
             </div>
-          </div>
+          </div>--%>
         </div>
         <div id="demo0" style="text-align: center;"></div>
       </div>
     </div>
   </div>
   <!-- 模版引擎导入 -->
-  <!-- <script type="text/html" id="demo">
+   <script type="text/html" id="demo">
     {{# layui.each(d.listCont,function(index,item){}}
     <div class="item">
       <div class="img">
@@ -242,7 +242,7 @@
       </div>
     </div>
     {{# })}}
-  </script> -->
+  </script>
 <script>
   layui.config({
     base: '/static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
@@ -254,18 +254,19 @@
         ,count: 100 //数据总数
       });
     // 模版引擎导入
-     // var html = demo.innerHTML;
-     // var listCont = document.getElementById('list-cont');
-     //  mm.request({
-     //    url: '../json/information.json',
-     //    success : function(res){
-     //      console.log(res)
-     //      listCont.innerHTML = mm.renderHtml(html,res)
-     //    },
-     //    error: function(res){
-     //      console.log(res);
-     //    }
-     //  })   
+     var html = demo.innerHTML;
+     var listCont = document.getElementById('list-cont');
+      mm.request({
+        //url: '../json/information.json',
+          url:'/getInformation',
+        success : function(res){
+          console.log(res)
+          listCont.innerHTML = mm.renderHtml(html,res)
+        },
+        error: function(res){
+          console.log(res);
+        }
+      })
 });
 
 </script>

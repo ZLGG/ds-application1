@@ -102,7 +102,7 @@
       </div>
       <div class="OrderList">
         <div class="order-content" id="list-cont">
-          <ul class="item-content layui-clear">
+          <%--<ul class="item-content layui-clear">
             <li class="th th-chk">
               <div class="select-all">
                 <div class="cart-checkbox">
@@ -203,13 +203,13 @@
             <li class="th th-op">
               <span class="dele-btn">删除</span>
             </li>
-          </ul>
+          </ul>--%>
         </div>
       </div>
 
 
       <!-- 模版导入数据 -->
-      <!-- <script type="text/html" id="demo">
+      <script type="text/html" id="demo">
         {{# layui.each(d.infoList,function(index,item){}}
           <ul class="item-content layui-clear">
             <li class="th th-chk">
@@ -246,7 +246,7 @@
             </li>
           </ul>
         {{# });}}
-      </script> -->
+      </script>
 
 
       <div class="FloatBarHolder layui-clear">
@@ -278,19 +278,19 @@
     var mm = layui.mm,$ = layui.$,element = layui.element,car = layui.car;
     
     // 模版导入数据
-    // var html = demo.innerHTML,
-    // listCont = document.getElementById('list-cont');
-    // mm.request({
-    //   url: '../json/shopcart.json',
-    //   success : function(res){
-    //     listCont.innerHTML = mm.renderHtml(html,res)
-    //     element.render();
-    //     car.init()
-    //   },
-    //   error: function(res){
-    //     console.log(res);
-    //   }
-    // })
+    var html = demo.innerHTML,
+    listCont = document.getElementById('list-cont');
+    mm.request({
+      url: '/getFrontCart',
+      success : function(res){
+        listCont.innerHTML = mm.renderHtml(html,res)
+        element.render();
+        car.init()
+      },
+      error: function(res){
+        console.log(res);
+      }
+    })
 
     car.init()
 

@@ -142,37 +142,7 @@ public class ItemController {
         return "adminIndex";
     }
 
-    @ResponseBody
-    @RequestMapping("/getOrderList")
-    public Result getOrderList(@RequestParam(name="id",required=false,defaultValue="0")String id
-                                ,@RequestParam(name="isPay",required=false,defaultValue="0")String isPay
-                                ,@RequestParam(name="start",required=false,defaultValue="0")String start
-                                ,@RequestParam(name="end",required=false,defaultValue="0")String end
-                                ,@RequestParam(name="status",required=false,defaultValue="0")String status) {
-        Item item = new Item();
-        if (id.equals("1")) {
-            item.setId("123");
-            item.setColor("hong");
-            item.setCiurPic("$200");
-            item.setImg("jfsfj");
-            item.setDiscount("5zhe");
-        } else {
-            item = new Item();
-            item.setId("4234");
-            item.setColor("fsf");
-            item.setCiurPic("$500");
-            item.setImg("/img/a.jpg");
-            item.setDiscount("6zhe");
-        }
 
-        ArrayList<Item> items = new ArrayList<>();
-        items.add(item);
-        if (id.equals("1")) {
-            return new Result(0,"chenggong",items,50);
-        }
-        return new Result(0,"chenggong",items,100);
-
-    }
 
     @ResponseBody
     @RequestMapping("/getTopCatalog")
@@ -220,5 +190,14 @@ public class ItemController {
         String imgUrl = request.getParameter("imgUrl");
         imgUrl = "/image/" + imgUrl;
         return new ResponseDto<>("增加成功");
+    }
+
+    @ResponseBody
+    @RequestMapping("/getItem")
+    public ResponseDto getItem(String id,HttpSession session) {
+        Item item = new Item();
+        session.setAttribute("item",item);
+        //
+        return new ResponseDto("");
     }
 }

@@ -70,9 +70,9 @@
             <div class="layui-btn"  lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></div>
         </form>
     </div>
-    <xblock>
+    <%--<xblock>
         <button class="layui-btn" onclick="x_admin_show('添加订单','./order-add.html')"><i class="layui-icon"></i>添加</button>
-    </xblock>
+    </xblock>--%>
   <%--  <table class="layui-table">
         <thead>
         <tr>
