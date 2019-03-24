@@ -48,7 +48,7 @@
             <th lay-data="{type:'checkbox'}">ID</th>
             <th lay-data="{field:'id', width:80, sort: true}">ID</th>
             <th lay-data="{field:'username', width:120, sort: true, edit: 'text'}">用户名</th>
-            <th lay-data="{field:'email', minWidth: 80, width:120}">邮箱</th>
+            <th lay-data="{field:'email', minWidth: 80, width:220}">邮箱</th>
             <th lay-data="{field:'sex', width:80,templet: '#switchTpl'}">性别</th>
               <th lay-data="{field:'createTime',  minWidth: 100,width:120}">创建时间</th>
               <%--<th lay-data="{field:'experience', sort: true, edit: 'text'}">积分</th>--%>

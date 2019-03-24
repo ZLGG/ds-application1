@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class FrontController {
@@ -23,6 +25,24 @@ public class FrontController {
                 "    {\"img\":\"../res/img/new2.jpg\",\"text\":\"周岁内的宝宝消化不良拉肚子怎么办?\",\"data\":\"2016-12-24 16:33:26\",\"infoCont\":\"宝宝在周岁之前体质相对较弱，特别是薄弱肠道，一不注意就会拉肚子;那么宝宝消化不良拉肚子\"}\n" +
                 "  ]\n" +
                 "}";
+    }
+    @ResponseBody
+    @RequestMapping("/getBlackGetInformation")
+    public Result getBlackGetInformation() {
+        Information information = new Information();
+        information.setData("neirong");
+        information.setInfoCont("infocont");
+        information.setText("text");
+        List informationList = new ArrayList<>();
+        informationList.add(information);
+        return new Result(0,"chenggong",informationList);
+        /*return "{\n" +
+                "   \"status\":0,\n" +
+                "  \"listCont\":[\n" +
+                "    {\"img\":\"../res/img/new1.jpg\",\"text\":\"周岁内的宝宝消化不良拉肚子怎么办?\",\"data\":\"2016-12-24 16:33:26\",\"infoCont\":\"宝宝在周岁之前体质相对较弱，特别是薄弱肠道，一不注意就会拉肚子;那么宝宝消化不良拉肚子\"},\n" +
+                "    {\"img\":\"../res/img/new2.jpg\",\"text\":\"周岁内的宝宝消化不良拉肚子怎么办?\",\"data\":\"2016-12-24 16:33:26\",\"infoCont\":\"宝宝在周岁之前体质相对较弱，特别是薄弱肠道，一不注意就会拉肚子;那么宝宝消化不良拉肚子\"}\n" +
+                "  ]\n" +
+                "}";*/
     }
 
     @ResponseBody
@@ -39,6 +59,6 @@ public class FrontController {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String data = simpleDateFormat.format(date);
         information.setData(data);
-        return new ResponseDto("添加成功");
+        return new ResponseDto(information);
     }
 }

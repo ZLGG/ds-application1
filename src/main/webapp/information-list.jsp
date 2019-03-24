@@ -64,7 +64,7 @@
         table.render({
             elem: '#demo'
             ,height: 420
-            ,url: '/getInformation' //数据接口
+            ,url: '/getBlackGetInformation' //数据接口
             ,title: '资讯列表'
             ,page: true //开启分页
             ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
@@ -73,9 +73,9 @@
                 {type: 'checkbox', fixed: 'left'}
                 // ,{field: 'id', title: 'ID', width:80, sort: true, fixed: 'left', totalRowText: '合计：'}
                 ,{field: 'text', title:'讯息',width: 100}
-                ,{field: 'infoCont',title:'内容',width:180}
-                ,{field: 'img', title:'图片',width: 80}
-                ,{field: 'data', title: '时间', width:80}
+                ,{field: 'infoCont',title:'内容',width:480}
+                //,{field: 'img', title:'图片',width: 80}
+                ,{field: 'data', title: '时间', width:120}
                 /*,{field: 'score', title: '评分', width: 80, sort: true, totalRow: true}
                 ,{field: 'city', title: '城市', width:150}
                 ,{field: 'sign', title: '签名', width: 200}

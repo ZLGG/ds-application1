@@ -71,7 +71,7 @@
         </form>
     </div>
     <%--<xblock>
-        <button class="layui-btn" onclick="x_admin_show('添加订单','./order-add.html')"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" onclick="x_admin_show('添加订单','/test/order-add')"><i class="layui-icon"></i>添加</button>
     </xblock>--%>
   <%--  <table class="layui-table">
         <thead>

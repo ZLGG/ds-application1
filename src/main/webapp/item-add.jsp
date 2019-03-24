@@ -125,7 +125,9 @@
                 <i class="layui-icon">&#xe67c;</i>上传图片
             </button>
             <div class="layui-upload-list">
-                <img class="layui-upload-img" id="demo1">
+                <label  class="layui-form-label">
+                </label>
+                <img class="layui-upload-img" id="demo1" height="120" width="80">
                 <p id="demoText"></p>
             </div>
         </div>
@@ -158,7 +160,7 @@
                        /* setTimeout(function () {
                             window.location.href = "/index.jsp";
                         },1000)*/
-                        layer.msg(data);
+                        //layer.msg(data);
                     }
                     else {
                         lay.msg(data.errorMsg,{time: 1000});
@@ -188,7 +190,7 @@
                             /* setTimeout(function () {
                                  window.location.href = "/index.jsp";
                              },1000)*/
-                            layer.msg(data);
+                            //layer.msg(data);
                            /* layer.alert("增加成功", {icon: 6},function () {
                                 // 获得frame索引
                                 var index = parent.layer.getFrameIndex(window.name);

@@ -42,7 +42,7 @@
                     <%--<dd><a href="">基本资料</a></dd>
                     <dd><a href="">安全设置</a></dd>--%>
                         <dd>
-                            <a onclick="WeAdminShow('个人信息','http://www.baidu.com')">个人信息</a>
+                            <a onclick="WeAdminShow('个人信息','/test/admin/edit')">个人信息</a>
                         </dd>
                         <dd>
                             <a onclick="WeAdminShow('切换帐号','/test/back-login')">切换帐号</a>
@@ -141,7 +141,7 @@
                         <a data-url="/test/member-list1" data-id="11" data-title="用户列表" href="#" class="site-demo-active" data-type="tabAdd">用户列表</a>
                     </dd>
                     <dd>
-                        <a href="#" data-url="/test/jiaose" data-title="添加用户"  data-id="24" class="site-demo-active" data-type="tabAdd">选项b</a>
+                        <a href="#" data-url="/test/city" data-title="城市联动"  data-id="24" class="site-demo-active" data-type="tabAdd">城市联动</a>
                     </dd>
                 </dl>
             </li>

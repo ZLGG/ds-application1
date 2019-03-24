@@ -49,7 +49,7 @@
             </div>
         </div>
 
-        <div class="layui-form-item" hidden>
+        <%--<div class="layui-form-item" hidden>
             <label for="img" class="layui-form-label">
                 <span class="x-red">*</span>图片url
             </label>
@@ -72,7 +72,7 @@
                 <img class="layui-upload-img" id="demo1">
                 <p id="demoText"></p>
             </div>
-        </div>
+        </div>--%>
 
 
         <div class="layui-form-item">
@@ -103,12 +103,12 @@
                     url: "/addInformation",
                     datatype: "json",
                     data:data.field,
-                    success:function (data) {
-                        if (data.result=='SUCCESS') {
+                    success:function (data1) {
+                        if (data1.result=='SUCCESS') {
                             /* setTimeout(function () {
                                  window.location.href = "/index.jsp";
                              },1000)*/
-                            layer.msg(data);
+                            //layer.msg(data1);
                             /* layer.alert("增加成功", {icon: 6},function () {
                                  // 获得frame索引
                                  var index = parent.layer.getFrameIndex(window.name);
@@ -130,7 +130,7 @@
 
                 }
             );
-            layer.alert("增加成功", {icon: 6},function () {
+            layer.alert("增加成功", {icon: 6}, function () {
                 // 获得frame索引
                 var index = parent.layer.getFrameIndex(window.name);
                 //关闭当前frame
@@ -143,7 +143,7 @@
             return false;
         });
 
-        var uploadInst = upload.render({
+       /* var uploadInst = upload.render({
             elem: '#test1'
             ,url: '/upload/'
             // ,auto: false //选择文件后不自动上传
@@ -172,7 +172,7 @@
                     uploadInst.upload();
                 });
             }
-        });
+        });*/
 
     });
 </script>
