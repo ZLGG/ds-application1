@@ -3,9 +3,9 @@ package com.zlg.bs.vo;
 
 public class Constans {
 
-    public static String mail = null;
-    public static String password = null;
-    public static String host = null;
+    public static String mail = null;   //
+    public static String password = null;   //
+    public static String host = null;   //spring.mail.host=smtp.163.com
     public static String SERVER_URL = "https://openapi.alipaydev.com/gateway.do";
     public static String APP_ID = "2016092400582212";
     public static String FORMAT = "json";

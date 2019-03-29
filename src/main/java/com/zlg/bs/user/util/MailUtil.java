@@ -2,6 +2,7 @@ package com.zlg.bs.user.util;
 
 import com.zlg.bs.vo.Constans;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,13 +19,16 @@ public class MailUtil {
     /*@Autowired
     TemplateEngine templateEngine;*/
     @Autowired
-    JavaMailSender jms;
+    private JavaMailSender jms;
+    @Value("{spring.mail.alias}")
+    private String sender;
+
 
     public String send(String email){
         //建立邮件消息
         SimpleMailMessage mainMessage = new SimpleMailMessage();
         //发送者
-        mainMessage.setFrom("17633901170@163.com");
+        mainMessage.setFrom(sender);
         //接收者
         mainMessage.setTo(email);
         //发送的标题

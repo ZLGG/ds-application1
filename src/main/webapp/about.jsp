@@ -52,10 +52,10 @@
       <div class="inner-cont0">
         <div class="inner-cont1 w1200">
           <div class="inner-cont2">
-            <a href="commodity.html">所有商品</a>
-            <a href="buytoday.html">今日团购</a>
-            <a href="information.html">母婴资讯</a>
-            <a href="about.html"  class="active">关于我们</a>
+            <a href="/test/commodity">所有商品</a>
+            <a href="/test/buytoday">今日团购</a>
+            <a href="/test/information">母婴资讯</a>
+            <a href="/test/about"  class="active">关于我们</a>
           </div>
         </div>
       </div>

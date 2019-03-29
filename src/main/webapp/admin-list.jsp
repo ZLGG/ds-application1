@@ -12,9 +12,10 @@
     <link rel="stylesheet" href="/css/xadmin.css">
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="/js/xadmin.js"></script>
     <script type="text/javascript" src="/js/cookie.js"></script>
+    <script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
+
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -54,16 +55,16 @@
             <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
     </div>
-    <table class="layui-table" lay-data="{url:'/user.json',page:true,toolbar: '#toolbarDemo',id:'test'}" lay-filter="test">
+    <table class="layui-table" lay-data="{url:'/getAdminList',page:true,toolbar: '#toolbarDemo',id:'test'}" lay-filter="test">
         <thead>
         <tr>
             <th lay-data="{type:'checkbox'}">ID</th>
             <th lay-data="{field:'id', width:80, sort: true}">ID</th>
             <th lay-data="{field:'username', width:120, sort: true, edit: 'text'}">用户名</th>
-            <th lay-data="{field:'email', minWidth: 80, width:280}">邮箱</th>
+            <%--<th lay-data="{field:'email', minWidth: 80, width:280}">邮箱</th>--%>
             <%--<th lay-data="{field:'sex', width:80,templet: '#switchTpl'}">性别</th>--%>
             <th lay-data="{field:'createTime',  minWidth: 100,width:120}">创建时间</th>
-            <%--<th lay-data="{field:'experience', sort: true, edit: 'text'}">积分</th>--%>
+            <th lay-data="{field:'role', width:120}">角色</th>
             <th lay-data="{width:80,toolbar:'#barDemo'}"></th>
         </tr>
         </thead>
@@ -118,7 +119,6 @@
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
 })();</script>
-<script src="/static/layui/layui.js" charset="utf-8"></script>
 <script src="/static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
 </body>
 

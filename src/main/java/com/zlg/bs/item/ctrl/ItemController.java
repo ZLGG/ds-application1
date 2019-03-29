@@ -1,6 +1,8 @@
 package com.zlg.bs.item.ctrl;
 
 import com.zlg.bs.center.user.vo.ResponseDto;
+import com.zlg.bs.vo.BuyToDayResultVo;
+import com.zlg.bs.vo.IndexResultVo;
 import com.zlg.bs.vo.Item;
 import com.zlg.bs.vo.Result;
 import eo.Catalog;
@@ -125,7 +127,7 @@ public class ItemController {
 
     @ResponseBody
     @RequestMapping("/getItemList")
-    public Result getItemList() {
+    public Result getItemList(String page,String limit) {
         Item item = new Item();
         item.setId("123");
         item.setColor("hong");
@@ -134,7 +136,7 @@ public class ItemController {
         item.setDiscount("5zhe");
         ArrayList<Item> items = new ArrayList<>();
         items.add(item);
-        return new Result(0,"chenggong",items);
+        return new Result(0,"chenggong",items,100);
     }
 
     @RequestMapping("/toIndex")
@@ -169,7 +171,7 @@ public class ItemController {
 
     @ResponseBody
     @RequestMapping("/getCatalog")
-    public ResponseDto getCatalog(HttpSession session ) {
+    public ResponseDto getCatalog(HttpSession session,HttpServletRequest request) {
         Catalog catalog = new Catalog();
         List catalogs = new ArrayList<Catalog>();
         catalog.setId(1L);
@@ -199,5 +201,31 @@ public class ItemController {
         session.setAttribute("item",item);
         //
         return new ResponseDto("");
+    }
+
+    @ResponseBody
+    @RequestMapping("/getBuytoday")
+    public String getBuytoday() {
+        //return new BuyToDayResultVo();
+        return "{\n" +
+                "    \"status\":0,\n" +
+                "  \"productList\":[\n" +
+                "    {\"img\":\"../res/img/tuan_img1.jpg\",\"title\":\"宝宝专用硅胶环保饭碗四套+调羹+筷子自助学吃饭套装\",\"ciurPic\":\"￥100.00\",\"OriPic\":\"￥208.00\",\"discount\":\"5折\"},\n" +
+                "    {\"img\":\"../res/img/tuan_img2.jpg\",\"title\":\"宝宝专用硅胶环保饭碗四套+调羹+筷子自助学吃饭套装\",\"ciurPic\":\"￥100.00\",\"OriPic\":\"￥208.00\",\"discount\":\"5折\"},\n" +
+                "    {\"img\":\"../res/img/tuan_img3.jpg\",\"title\":\"宝宝专用硅胶环保饭碗四套+调羹+筷子自助学吃饭套装\",\"ciurPic\":\"￥100.00\",\"OriPic\":\"￥208.00\",\"discount\":\"5折\"},\n" +
+                "    {\"img\":\"../res/img/tuan_img4.jpg\",\"title\":\"宝宝专用硅胶环保饭碗四套+调羹+筷子自助学吃饭套装\",\"ciurPic\":\"￥100.00\",\"OriPic\":\"￥208.00\",\"discount\":\"5折\"},\n" +
+                "    {\"img\":\"../res/img/tuan_img4.jpg\",\"title\":\"宝宝专用硅胶环保饭碗四套+调羹+筷子自助学吃饭套装\",\"ciurPic\":\"￥100.00\",\"OriPic\":\"￥208.00\",\"discount\":\"5折\"}\n" +
+                "\n" +
+                "  ],\n" +
+                "  \"footerList\":[{\"img\":\"../res/img/tuan_img5.jpg\",\"title\":\"宝宝打底衣棉麻透气不起球白色多色可选\",\"price\":\"￥100.00\"},{\"img\":\"../res/img/tuan_img6.jpg\",\"title\":\"宝宝打底衣棉麻透气不起球白色多色可选\",\"price\":\"￥100.00\"},{\"img\":\"../res/img/tuan_img7.jpg\",\"title\":\"宝宝打底衣棉麻透气不起球白色多色可选\",\"price\":\"￥100.00\"}]\n" +
+                "}";
+    }
+
+    @ResponseBody
+    @RequestMapping("/getIndex")
+    public IndexResultVo getIndex() {
+        IndexResultVo indexResultVo = new IndexResultVo();
+        indexResultVo.setStatus("0");
+        return indexResultVo;
     }
 }

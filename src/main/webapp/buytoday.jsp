@@ -53,10 +53,10 @@
         <div class="inner-cont0">
           <div class="inner-cont1 w1200">
             <div class="inner-cont2">
-              <a href="commodity.html">所有商品</a>
-              <a href="buytoday.html" class="active">今日团购</a>
-              <a href="information.html">母婴资讯</a>
-              <a href="about.html">关于我们</a>
+              <a href="/test/commodity">所有商品</a>
+              <a href="/test/buytoday" class="active">今日团购</a>
+              <a href="/test/information">母婴资讯</a>
+              <a href="/test/about">关于我们</a>
             </div>
           </div>
         </div>
@@ -655,20 +655,20 @@
           }
         })
       })
-    // 模版引擎导入
-    //  var html = demo.innerHTML;
-    //  var listCont = document.getElementById('list-cont');
-    //  // console.log(layui.router("#/about.html"))
-    // mm.request({
-    //     url: '../json/buytoday.json',
-    //     success : function(res){
-    //       console.log(res)
-    //       listCont.innerHTML = mm.renderHtml(html,res)
-    //     },
-    //     error: function(res){
-    //       console.log(res);
-    //     }
-    //   })
+    模版引擎导入
+     var html = demo.innerHTML;
+     var listCont = document.getElementById('list-cont');
+     // console.log(layui.router("#/about.html"))
+    mm.request({
+        url: '/getBuytoday',
+        success : function(res){
+          console.log(res)
+          listCont.innerHTML = mm.renderHtml(html,res)
+        },
+        error: function(res){
+          console.log(res);
+        }
+      })
 
 });
 </script>

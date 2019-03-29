@@ -485,21 +485,21 @@ layui.config({
       }
       carousel.render(option);
       // 模版引擎导入
-     // var ins = carousel.render(option);
-     // var html = demo.innerHTML;
-     // var listCont = document.getElementById('list-cont');
-     // // console.log(layui.router("#/about.html"))
-     //  mm.request({
-     //    url: '../json/index.json',
-     //    success : function(res){
-     //      console.log(res)
-     //      listCont.innerHTML = mm.renderHtml(html,res)
-     //      ins.reload(option);
-     //    },
-     //    error: function(res){
-     //      console.log(res);
-     //    }
-     //  })
+     var ins = carousel.render(option);
+     var html = demo.innerHTML;
+     var listCont = document.getElementById('list-cont');
+     // console.log(layui.router("#/about.html"))
+      mm.request({
+        url: '/getIndex',
+        success : function(res){
+          console.log(res)
+          listCont.innerHTML = mm.renderHtml(html,res)
+          ins.reload(option);
+        },
+        error: function(res){
+          console.log(res);
+        }
+      })
     
 
 });

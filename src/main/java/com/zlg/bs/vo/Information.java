@@ -1,5 +1,8 @@
 package com.zlg.bs.vo;
 
+import lombok.Data;
+
+@Data
 public class Information {
     private int id;
     private String img;

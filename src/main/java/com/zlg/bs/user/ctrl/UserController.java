@@ -6,19 +6,19 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.alipay.api.response.AlipayTradeRefundResponse;
+import com.taobao.diamond.domain.Page;
 import com.zlg.bs.center.user.eo.UserEo;
 import com.zlg.bs.center.user.vo.ResponseDto;
+import com.zlg.bs.user.AdminVo;
 import com.zlg.bs.user.service.UserServiceImpl;
 import com.zlg.bs.user.util.MailUtil;
 import com.zlg.bs.user.util.UuidUtil;
 import com.zlg.bs.user.util.VerifyCodeUtils;
 import com.zlg.bs.vo.Constans;
+import com.zlg.bs.vo.Result;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -117,5 +117,33 @@ public class UserController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping("/getAdminList")
+    public String getAdminList(String page,String limit) {
+
+        return "{\n" +
+                "  \"code\": 0\n" +
+                "  ,\"msg\": \"\"\n" +
+                "  ,\"count\": 300\n" +
+                "  ,\"data\": [{\n" +
+                "    \"id\": \"10001\"\n" +
+                "    ,\"username\": \"zlg\"\n" +
+                "    ,\"email\": \"xianxin@layui.com\"\n" +
+                "    ,\"sex\": \"男\"\n" +
+                "    ,\"city\": \"浙江杭州\"\n" +
+                "    ,\"sign\": \"点击此处，显示更多。当内容超出时，点击单元格会自动显示更多内容。\"\n" +
+                "    ,\"experience\": \"116\"\n" +
+                "    ,\"ip\": \"192.168.0.8\"\n" +
+                "    ,\"logins\": \"108\"\n" +
+                "    ,\"joinTime\": \"2016-10-14\"\n" +
+                "  }]" +
+                "}";
+    }
+
+    @ResponseBody
+    @RequestMapping("/addAdmin")
+    public ResponseDto addAdmin(AdminVo adminVo) {
+        return new ResponseDto<>("");
+    }
 
 }

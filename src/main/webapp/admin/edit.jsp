@@ -31,7 +31,7 @@
                   <span class="we-red">*</span>将会成为您唯一的登入名
               </div>
           </div>
-          <div class="layui-form-item">
+         <%-- <div class="layui-form-item">
               <label for="phone" class="layui-form-label">
                   <span class="we-red">*</span>手机
               </label>
@@ -54,13 +54,12 @@
               <div class="layui-form-mid layui-word-aux">
                   <span class="we-red">*</span>
               </div>
-          </div>
+          </div>--%>
           <div class="layui-form-item" aria-autocomplete="both">
               <label class="layui-form-label"><span class="we-red">*</span>角色</label>
               <div class="layui-input-block" >
-                <input type="checkbox" name="like1[write]" lay-skin="primary" title="超级管理员" checked="" >
-                <input type="checkbox" name="like1[read]" lay-skin="primary" title="编辑人员">
-                <input type="checkbox" name="like1[write]" lay-skin="primary" title="宣传人员" >
+                <input type="checkbox" name="role" lay-skin="primary" title="超级管理员" >
+                <input type="checkbox" name="role" lay-skin="primary" title="普通管理员" checked="" >
               </div>
           </div>
           <div class="layui-form-item" style="margin-top: 10px">
@@ -122,6 +121,29 @@
           form.on('submit(add)', function(data){
             console.log(data);
             //发异步，把数据提交给php
+              $.ajax(
+                  {
+                      type: "post",
+                      url: "/updateAdmin",
+                      datatype: "json",
+                      data:data.field ,
+                      success:function (data) {
+                          if (data.result=='SUCCESS') {
+                              /* setTimeout(function () {
+                                   window.location.href = "/index.jsp";
+                               },1000)*/
+                              //layer.msg(data);
+                          }
+                          else {
+                              layer.msg(data.errorMsg,{time: 1000});
+                          }
+                      },
+                      error:function () {
+                          layer.msg("商品分类获取失败");
+                      }
+
+                  }
+              );
             layer.alert("增加成功", {icon: 6},function () {
                 // 获得frame索引
                 var index = parent.layer.getFrameIndex(window.name);

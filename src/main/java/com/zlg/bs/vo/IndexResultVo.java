@@ -1,7 +1,9 @@
 package com.zlg.bs.vo;
 
-import java.util.List;
+import lombok.Data;
 
+import java.util.List;
+@Data
 public class IndexResultVo {
     private String status;
     private Floor floor;

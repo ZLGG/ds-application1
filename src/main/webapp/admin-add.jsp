@@ -123,6 +123,29 @@
           form.on('submit(add)', function(data){
             console.log(data);
             //发异步，把数据提交给php
+              $.ajax(
+                  {
+                      type: "post",
+                      url: "/addAdmin",
+                      datatype: "json",
+                      data:data.field ,
+                      success:function (data) {
+                          if (data.result=='SUCCESS') {
+                              /* setTimeout(function () {
+                                   window.location.href = "/index.jsp";
+                               },1000)*/
+                              //layer.msg(data);
+                          }
+                          else {
+                              layer.msg(data.errorMsg,{time: 1000});
+                          }
+                      },
+                      error:function () {
+                          layer.msg("商品分类获取失败");
+                      }
+
+                  }
+              );
             layer.alert("增加成功", {icon: 6},function () {
                 // 获得frame索引
                 var index = parent.layer.getFrameIndex(window.name);
