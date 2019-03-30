@@ -262,7 +262,7 @@
           <span class="batch-dele-btn">批量删除</span>
         </div>
         <div class="th Settlement">
-          <button class="layui-btn">结算</button>
+          <button class="layui-btn" lay-submit="" lay-filter="demo11">结算</button>
         </div>
         <div class="th total">
           <p>应付：<span class="pieces-total">0</span></p>
@@ -290,10 +290,32 @@
       error: function(res){
         console.log(res);
       }
-    })
+    });
 
     car.init()
-
+      form.on('submit(demo11)',function (data) {
+          $.ajax({
+              url:"/alipay",
+              data:data.field,
+              dataType:"json",
+              type:'post',
+              success:function (result) {
+                  if (result.result=='SUCCESS'){
+                      //layer.msg(data1.data, 1000);
+                      setTimeout(function () {
+                          window.location.href = "/index.jsp";
+                      },1000)
+                  }
+                  else {
+                      layer.msg(result.errorMsg,{time:1000});
+                  }
+              },
+              error:function () {
+                  layer.msg("异常");
+              }
+          });
+          return false;
+      });
 
 });
 </script>
