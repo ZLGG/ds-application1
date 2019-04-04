@@ -1,7 +1,6 @@
 package com.zlg.bs.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.edas.acm.ConfigService;
 import com.alibaba.fastjson.JSONObject;
 import com.zlg.bs.config.bean.DataSourceVo;
 import org.apache.ibatis.logging.slf4j.Slf4jImpl;
@@ -17,20 +16,20 @@ import org.springframework.context.annotation.Configuration;
 public class DataSourceConfig {
     @Bean(name = "datasource",destroyMethod = "close")
     public DruidDataSource dataSource() throws Exception{
-        String config = ConfigService.getConfig("yundt.smartsales.mall.appmgmt.datasourcevo", "zlg", 3000);
+        //String config = ConfigService.getConfig("yundt.smartsales.mall.appmgmt.datasourcevo", "zlg", 3000);
 
-        DataSourceVo dataSourceVo = JSONObject.parseObject(config, DataSourceVo.class);
+        //DataSourceVo dataSourceVo = JSONObject.parseObject(config, DataSourceVo.class);
 
         DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setDriverClassName(dataSourceVo.getDriverClassName());
-        dataSource.setUrl(dataSourceVo.getJdbcUrl());
-        dataSource.setUsername(dataSourceVo.getJdbcUserName());
-        dataSource.setPassword(dataSourceVo.getJdbcUserPassword());
-        dataSource.setMaxActive(dataSourceVo.getMaxActive());
-        dataSource.setValidationQuery(dataSourceVo.getValidationQuery());
-        dataSource.setInitialSize(dataSourceVo.getInitialSize());
-        dataSource.setMinIdle(dataSourceVo.getMinIdle());
-        dataSource.setMaxWait(dataSourceVo.getMaxWait());
+        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://127.0.0.1/bs_mall_mgmt?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true");
+        dataSource.setUsername("root");
+        dataSource.setPassword("root");
+        dataSource.setMaxActive(5);
+        dataSource.setValidationQuery("SELECT 1");
+        dataSource.setInitialSize(1);
+        dataSource.setMinIdle(0);
+        dataSource.setMaxWait(6000);
         return dataSource;
     }
     @Bean(name = "sqlSessionFactory")

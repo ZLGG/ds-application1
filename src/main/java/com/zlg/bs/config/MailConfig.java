@@ -1,7 +1,5 @@
 package com.zlg.bs.config;
 
-import com.alibaba.edas.acm.ConfigService;
-import com.alibaba.edas.acm.listener.ConfigChangeListener;
 import com.zlg.bs.vo.Constans;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,11 +12,11 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 public class MailConfig {
     @Bean("jms")
     public JavaMailSender jms() throws Exception{
-        String config = ConfigService.getConfig("MailNumber", "zlg", 3000L);
-        String[] split = config.split(":");
-        Constans.mail = split[0];
+       // String config = ConfigService.getConfig("MailNumber", "zlg", 3000L);
+       // String[] split = config.split(":");
+        /*Constans.mail = split[0];
         Constans.password = split[1];
-        Constans.host = split[2];
+        Constans.host = split[2];*/
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost( Constans.host);
         javaMailSender.setPort(25);

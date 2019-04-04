@@ -177,8 +177,8 @@
         })
         var countdown=60; 
         function settime(obj) { 
-        if (countdown == 0) { 
-            obj.removeAttribute("disabled"); 
+        if (countdown == 0) {
+            obj.removeAttribute("disabled");
             obj.classList.remove("layui-btn-disabled")
             obj.value="获取验证码"; 
             countdown = 60; 
