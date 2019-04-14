@@ -17,7 +17,7 @@
     <div class="site-nav w1200">
         <p class="sn-back-home">
             <i class="layui-icon layui-icon-home"></i>
-            <a href="#">首页</a>
+            <a href="/test/index">首页</a>
         </p>
         <div class="sn-quick-menu">
 
@@ -26,10 +26,11 @@
                     <div class="login">${sessionScope.user}</div>
                 </c:when>
                 <c:otherwise>
-                    <div class="login"><a href="login.html">登录</a></div>
+                    <div class="login"><a href="/test/login">登录</a></div>
                 </c:otherwise>
             </c:choose>
-            <div class="sp-cart"><a href="shopcart.html">购物车</a><span></span></div>
+            <div class="sp-cart"><a href="/test/shopcart">购物车</a><span></span></div>
+            <div class="sp-cart"><a href="/test/order">订单</a></div>
         </div>
     </div>
 </div>
@@ -63,10 +64,10 @@
         <div class="inner-cont0">
             <div class="inner-cont1 w1200">
                 <div class="inner-cont2">
-                    <a href="commodity.html" class="active">所有商品</a>
-                    <a href="buytoday.html">今日团购</a>
-                    <a href="information.html">母婴资讯</a>
-                    <a href="about.html">关于我们</a>
+                    <a href="/test/commodity" class="active">所有商品</a>
+                    <a href="/test/buytoday">今日团购</a>
+                    <a href="/test/information">母婴资讯</a>
+                    <a href="/test/about">关于我们</a>
                 </div>
             </div>
         </div>

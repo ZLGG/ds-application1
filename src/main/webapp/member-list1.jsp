@@ -34,23 +34,23 @@
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="x-body">
-      <div class="layui-row">
+     <%-- <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
           <input class="layui-input"  autocomplete="off" placeholder="开始日" name="start" id="start">
           <input class="layui-input"  autocomplete="off" placeholder="截止日" name="end" id="end">
           <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
-      </div>
-      <table class="layui-table" lay-data="{url:'/user.json',page:true,toolbar: '#toolbarDemo',id:'test'}" lay-filter="test">
+      </div>--%>
+      <table class="layui-table" lay-data="{url:'/getUser',page:true,toolbar: '',id:'test'}" lay-filter="test">
         <thead>
           <tr>
             <th lay-data="{type:'checkbox'}">ID</th>
             <th lay-data="{field:'id', width:80, sort: true}">ID</th>
-            <th lay-data="{field:'username', width:120, sort: true, edit: 'text'}">用户名</th>
+            <%--<th lay-data="{field:'username', width:120, sort: true, edit: 'text'}">用户名</th>--%>
             <th lay-data="{field:'email', minWidth: 80, width:220}">邮箱</th>
-            <th lay-data="{field:'sex', width:80,templet: '#switchTpl'}">性别</th>
-              <th lay-data="{field:'createTime',  minWidth: 100,width:120}">创建时间</th>
+           <%-- <th lay-data="{field:'sex', width:80,templet: '#switchTpl'}">性别</th>--%>
+              <th lay-data="{field:'createTime',  minWidth: 160,width:180}">创建时间</th>
               <%--<th lay-data="{field:'experience', sort: true, edit: 'text'}">积分</th>--%>
           </tr>
         </thead>

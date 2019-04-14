@@ -55,13 +55,33 @@ layui.use(['laydate', 'jquery', 'admin'], function() {
 	window.member_del = function (obj, id) {
 		layer.confirm('确认要删除吗？', function(index) {
 			//发异步删除数据
-			$(obj).parents("tr").remove();
+            $.ajax(
+                {
+                    type: 'get',
+                    url: '/deleteAdmin',
+                    datatype: "json",
+                    data: {id:obj.data.id},
+                    success: function (result) {
+                        if (result.code == 0) {
+                        	layer.msg("成功删除",{time: 1000});
+                        }
+                        else {
+                            layer.msg("失败");
+                        }
+
+                    },
+                    error: function () {
+                        layer.msg('异常');
+                    }
+                }
+            );
+			/*$(obj).parents("tr").remove();
 			layer.msg('已删除!', {
 				icon: 1,
 				time: 1000
-			});
+			});*/
 		});
-	}
+	};
 
 
 	window.delAll = function (argument) {

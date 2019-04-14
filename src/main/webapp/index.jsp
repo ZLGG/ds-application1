@@ -474,7 +474,7 @@
       <div class="site-nav w1200">
         <p class="sn-back-home">
           <i class="layui-icon layui-icon-home"></i>
-          <a href="#">首页</a>
+          <a href="/test/index">首页</a>
         </p>
         <div class="sn-quick-menu">
           <div class="login">
@@ -488,6 +488,8 @@
             </c:choose>
           </div>
           <div class="sp-cart"><a href="/test/shopcart">购物车</a><%--<span>2</span>--%></div>
+          <div class="sp-cart"><a href="/test/order">订单</a></div>
+
         </div>
       </div>
     </div>
@@ -495,7 +497,7 @@
       <div class="headerLayout w1200">
         <div class="headerCon">
           <h1 class="mallLogo">
-            <a href="#" title="母婴商城">
+            <a href="/test/index" title="母婴商城">
               <img src="/static/img/logo.png">
             </a>
           </h1>
@@ -517,15 +519,15 @@
           <div class="inner-cont1 w1200">
             <div class="inner-cont2">
               <a href="/test/commodity" class="active">所有商品</a>
-              <a href="buytoday.html">今日团购</a>
-              <a href="information.html">母婴资讯</a>
-              <a href="about.html">关于我们</a>
+              <a href="/test/buytoday">今日团购</a>
+              <a href="/test/information">母婴资讯</a>
+              <a href="/test/about">关于我们</a>
             </div>
           </div>
         </div>
       </div>
       <div class="category-con">
-        <div class="category-inner-con w1200">
+        <%--<div class="category-inner-con w1200">
           <div class="category-type">
             <h3>全部分类</h3>
           </div>
@@ -575,7 +577,7 @@
               </ul>
             </div>
           </div>
-        </div>
+        </div>--%>
         <div class="category-banner">
           <div class="w1200">
             <img src="/static/img/banner1.jpg">
@@ -587,24 +589,26 @@
           <div class="sk_inner w1200">
             <div class="sk_hd">
               <a href="javascript:;">
-                <img src="{{d.floor.bigimg}}">
+                <img src="/static/img/s_img1.jpg">
               </a>
             </div>
             <div class="sk_bd">
               <div class="layui-carousel" id="test1">
                 <div carousel-item>
-                  <div class="item-box">
                     {{# layui.each(d.floor.banner,function(index,item){}}
+                  <div class="item-box">
+                    {{# layui.each(item.cont,function(index,item1){}}
                     <div class="item">
-                      <a href="javascript:;"><img src="{{item.img}}"></a>
-                      <div class="title">{{item.title}}</div>
+                    <a href="/todetail?id={{item1.id}}"><img src="{{item1.img}}" ></a>
+                      <div class="title">{{item1.title}}</div>
                       <div class="price">
-                        <span>{{item.price}}</span>
-                        <del>{{item.original}}</del>
+                        <span>{{item1.price}}</span>
+                        <del>{{item1.original}}</del>
                       </div>
                     </div>
                     {{# });}}
                   </div>
+                  {{# });}}
                 </div>
               </div>
             </div>
@@ -617,18 +621,22 @@
 
 
 
-      <div class="hot-recommend-con">
+   <%--   <div class="hot-recommend-con">
         <div class="hot-con1 w1200 layui-clear">
           <div class="item">
             <h4>{{d.hotCon.title}}</h4>
             <div class="big-img">
               <a href="javascript:;"><img src="{{d.hotCon.bigImg}}"></a>
             </div>
+&lt;%&ndash;
             {{# layui.each(d.hotCon.smallImg,function(index,item){}}
+&ndash;%&gt;
             <div class="small-img">
               <a href="javascript:;"><img src="/static/img/hot2.png" alt=""></a>
             </div>
+&lt;%&ndash;
             {{# });}}
+&ndash;%&gt;
           </div>
           <div class="item">
             <div class="top-img">
@@ -648,18 +656,18 @@
         </div>
       </div>
 
-
+--%>
 
       <div class="product-cont w1200" id="product-cont">
         {{# layui.each(d.proct,function(index,item){}}
         <div class="product-item product-item1 layui-clear">
           <div class="left-title">
-            <h4><i>1F</i></h4>
+            <h4><i> </i></h4>
             <img src="{{item.carImg}}">
-            <h5>{{item.title}}</h5>
+            <h5>{{item.text}}</h5>
           </div>
           <div class="right-cont">
-            <a href="javascript:;" class="top-img"><img src="{{item.imgBox.img}}" alt=""></a>
+            <a href="javascript:;" class="top-img"><img src="{{item.bigImg}}" alt=""></a>
             <div class="img-box">
               {{# layui.each(item.imgBox,function(index,item1){}}
               <a href="javascript:;"><img src="{{item1.img}}"></a>

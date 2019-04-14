@@ -40,14 +40,19 @@
             <label for="infoCont" class="layui-form-label">
                 <span class="x-red">*</span>内容
             </label>
-            <div class="layui-input-inline">
-                <input type="text" id="infoCont" name="infoCont" required="" lay-verify="required"
-                       autocomplete="off" class="layui-input">
+            <div class="layui-input-block">
+                <textarea name="infoCont" autocomplete="off" id="infoCont" placeholder="请输入内容" class="layui-textarea" required="" lay-verify="required"></textarea>
             </div>
             <div class="layui-form-mid layui-word-aux">
                 <span class="x-red">*</span><%--将会成为您唯一的登入名--%>
             </div>
         </div>
+        <%--<div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">文本域</label>
+            <div class="layui-input-block">
+                <textarea name="infoCont" autocomplete="off" id="infoCont" placeholder="请输入内容" class="layui-textarea" required="" lay-verify="required"></textarea>
+            </div>
+        </div>--%>
 
         <%--<div class="layui-form-item" hidden>
             <label for="img" class="layui-form-label">
@@ -119,6 +124,7 @@
                                  // 可以对父窗口进行刷新
                                  x_admin_father_reload();
                              });*/
+                            //layer.msg("添加成功");
                         }
                         else {
                             lay.msg(data.errorMsg,{time: 1000});

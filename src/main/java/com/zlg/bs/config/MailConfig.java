@@ -18,10 +18,10 @@ public class MailConfig {
         Constans.password = split[1];
         Constans.host = split[2];*/
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-        javaMailSender.setHost( Constans.host);
+        javaMailSender.setHost("smtp.163.com");
         javaMailSender.setPort(25);
-        javaMailSender.setUsername(Constans.mail);
-        javaMailSender.setPassword(Constans.password);
+        javaMailSender.setUsername("17633901170@163.com");
+        javaMailSender.setPassword("zlg960723");
         javaMailSender.setProtocol("smtp");
         javaMailSender.setDefaultEncoding("UTF-8");
         //javaMailSender.setJavaMailProperties();

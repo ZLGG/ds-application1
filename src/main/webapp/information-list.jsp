@@ -71,11 +71,11 @@
             ,totalRow: true //开启合计行
             ,cols: [[ //表头
                 {type: 'checkbox', fixed: 'left'}
-                // ,{field: 'id', title: 'ID', width:80, sort: true, fixed: 'left', totalRowText: '合计：'}
+                 ,{field: 'id', title: 'ID', width:80, sort: true}
                 ,{field: 'text', title:'讯息',width: 100}
                 ,{field: 'infoCont',title:'内容',width:480}
                 //,{field: 'img', title:'图片',width: 80}
-                ,{field: 'data', title: '时间', width:120}
+                ,{field: 'data', title: '时间', width:180}
                 /*,{field: 'score', title: '评分', width: 80, sort: true, totalRow: true}
                 ,{field: 'city', title: '城市', width:150}
                 ,{field: 'sign', title: '签名', width: 200}
@@ -85,7 +85,7 @@
                 ,{field: 'ciurPic', title:'价格',width: 80}
                 ,{field: 'img', title:'图片',width: 80}
                 ,{field: 'discount', title:'折扣',width: 80}*/
-                ,{field: 'right', width: 160, align:'center', toolbar: '#barDemo'}
+                ,{field: 'right', width: 80, align:'center', toolbar: '#barDemo'}
             ]]
         });
 
@@ -95,7 +95,7 @@
                 ,data = checkStatus.data; //获取选中的数据
             switch(obj.event){
                 case 'add':
-                    layer.msg('添加');
+                    //layer.msg('添加');
                     //addItem();
                     layer.open({
                         type: 2,
@@ -239,29 +239,7 @@
 
                     }
                 );*/
-                /* layer.open({
-                     type: 2,
-                     area: [($(window).width()*0.9)+'px', ($(window).height() - 50) +'px'],
-                     fix: false, //不固定
-                     maxmin: true,
-                     shadeClose: true,
-                     shade:0.4,
-                     title: "查看",
-                     content: '/test/admin-add',
-                     success: function(){
-                         //窗口加载成功刷新frame
-                         // location.replace(location.href);
-                     },
-                     cancel:function(){
-                         //关闭窗口之后刷新frame
-                         // location.replace(location.href);
-                     },
-                     end:function(){
-                         //窗口销毁之后刷新frame
-                         // location.replace(location.href);
-                     }
-                 });*/
-                // x_admin_show('商城首页','/test/index');
+
                 testShow()
             } else if(layEvent === 'del'){
                 layer.confirm('真的删除行么', function(index){
@@ -276,10 +254,10 @@
                             data:{id:obj.data.id},
                             success: function (result) {
                                 if (result.result=="SUCCESS") {
-
+                                    layer.msg("成功删除");
                                 }
                                 else {
-
+                                    layer.msg("出错");
                                 }
 
                             },
@@ -288,33 +266,12 @@
                             }
                         }
                     );
+                    location.replace(location.href);
 
                 });
             } else if(layEvent === 'edit'){
                 layer.msg('删除重新添加',{time:1000});
-               /* layer.msg('编辑操作');
-                layer.open({
-                    type: 2,
-                    area: [($(window).width() * 0.9) + 'px', ($(window).height() - 50) + 'px'],
-                    fix: false, //不固定
-                    maxmin: true,
-                    shadeClose: true,
-                    shade: 0.4,
-                    title: "编辑",
-                    content: '/test/item-edit',
-                    success: function () {
-                        //窗口加载成功刷新frame
-                        // location.replace(location.href);
-                    },
-                    cancel: function () {
-                        //关闭窗口之后刷新frame
-                        // location.replace(location.href);
-                    },
-                    end: function () {
-                        //窗口销毁之后刷新frame
-                        // location.replace(location.href);
-                    }
-                });*/
+
             }
         });
 

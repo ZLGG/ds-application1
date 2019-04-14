@@ -20,15 +20,14 @@ public class MailUtil {
     TemplateEngine templateEngine;*/
     @Autowired
     private JavaMailSender jms;
-    @Value("{spring.mail.alias}")
-    private String sender;
+
 
 
     public String send(String email){
         //建立邮件消息
         SimpleMailMessage mainMessage = new SimpleMailMessage();
         //发送者
-        mainMessage.setFrom(sender);
+        mainMessage.setFrom("17633901170@163.com ");
         //接收者
         mainMessage.setTo(email);
         //发送的标题

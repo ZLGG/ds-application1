@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 public class FileController {
@@ -33,8 +35,11 @@ public class FileController {
             fileName = fileName.substring(pos + 1);
         }
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        Date d = new Date();
+        String s = sdf.format(d).toString();
         //加个时间戳，尽量避免文件名称重复
-        String path = "D:/image/" + 1 + "_" + fileName;
+        String path = "D:/image/" +s+ "_" + fileName;
         File dest = new File(path);
 /*
         new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
@@ -58,6 +63,6 @@ public class FileController {
         }
 
         /*return "0";*/
-        return new ResponseDto(fileName);
+        return new ResponseDto("/image/" +s+ "_" + fileName);
     }
 }

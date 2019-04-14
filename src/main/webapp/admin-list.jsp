@@ -26,16 +26,10 @@
 <body class="">
 <script type="text/html" id="barDemo">
     <%--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail"><i class="layui-icon">&#xe60a;</i></a>--%>
-    <a onclick="member_stop(this,'10001')" href="javascript:;" title="启用">
-        <i class="layui-icon">&#xe601;</i>
-    </a>
-    <a title="编辑" onclick="WeAdminShow('编辑','/test/admin/edit')" href="javascript:;">
-        <i class="layui-icon">&#xe642;</i>
-    </a>
-    <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-        <i class="layui-icon">&#xe640;</i>
-    </a>
+    <%-- <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>--%>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
 </script>
+
 <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
@@ -47,24 +41,25 @@
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
 </div>
 <div class="x-body">
-    <div class="layui-row">
+    <%--<div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
             <input class="layui-input"  autocomplete="off" placeholder="开始日" name="start" id="start">
             <input class="layui-input"  autocomplete="off" placeholder="截止日" name="end" id="end">
-            <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            <input type="text" name="userName"  placeholder="请输入用户名" autocomplete="off" class="layui-input" id="userName">
             <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
-    </div>
-    <table class="layui-table" lay-data="{url:'/getAdminList',page:true,toolbar: '#toolbarDemo',id:'test'}" lay-filter="test">
+    </div>--%>
+    <table class="layui-table" lay-data="{url:'/getAdminList',page:true,toolbar: 'default',id:'test'}" lay-filter="test">
         <thead>
         <tr>
             <th lay-data="{type:'checkbox'}">ID</th>
             <th lay-data="{field:'id', width:80, sort: true}">ID</th>
-            <th lay-data="{field:'username', width:120, sort: true, edit: 'text'}">用户名</th>
+            <th lay-data="{field:'accountId', width:180, sort: true}">账号</th>
+            <th lay-data="{field:'userName', width:180, sort: true}">用户名</th>
             <%--<th lay-data="{field:'email', minWidth: 80, width:280}">邮箱</th>--%>
             <%--<th lay-data="{field:'sex', width:80,templet: '#switchTpl'}">性别</th>--%>
-            <th lay-data="{field:'createTime',  minWidth: 100,width:120}">创建时间</th>
-            <th lay-data="{field:'role', width:120}">角色</th>
+            <th lay-data="{field:'roleName', width:120}">角色</th>
+            <th lay-data="{field:'createTime',  minWidth: 160,width:180}">创建时间</th>
             <th lay-data="{width:80,toolbar:'#barDemo'}"></th>
         </tr>
         </thead>
@@ -100,8 +95,9 @@
     });
 </script>
 <script>
-    layui.use('table', function(){
+    layui.use(['table','form'], function(){
         var table = layui.table;
+        var form = layui.form;
 
         //监听单元格编辑
         table.on('edit(test)', function(obj){
@@ -111,6 +107,258 @@
             layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
             //调用ajax修改
         });
+
+        //监听头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id)
+                , data = checkStatus.data; //获取选中的数据
+            switch (obj.event) {
+                case 'add':
+                    layer.msg('添加');
+                    //addItem();
+                    layer.open({
+                        type: 2,
+                        area: [($(window).width() * 0.9) + 'px', ($(window).height() - 50) + 'px'],
+                        fix: false, //不固定
+                        maxmin: true,
+                        shadeClose: true,
+                        shade: 0.4,
+                        title: "添加用户",
+                        content: '/test/admin-add1',
+                        success: function () {
+                            //窗口加载成功刷新frame
+                            // location.replace(location.href);
+                        },
+                        cancel: function () {
+                            //关闭窗口之后刷新frame
+                            // location.replace(location.href);
+                        },
+                        end: function () {
+                            //窗口销毁之后刷新frame
+                            // location.replace(location.href);
+                        }
+                    });
+                    break;
+                case 'update':
+                    if (data.length === 0) {
+                        layer.msg('请选择一行');
+                    } else if (data.length > 1) {
+                        layer.msg('只能同时编辑一个');
+                    } else {
+                        //layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
+                        //根据id请求接口获取数据，弹出窗口回显
+                        /* $.ajax(
+                             {
+                                 type: "get",
+                                 url: "/getItem",
+                                 datatype: "json",
+                                 data:{id:checkStatus.data[0].id},
+                                 success: function (data) {
+                                     if (data.result == 'SUCCESS') {
+                                         /!*setTimeout(function () {
+                                             window.location.href = "/index.jsp";
+                                         },1000)*!/
+                                     }
+                                     else {
+                                         lay.msg(data.errorMsg, {time: 1000});
+                                     }
+                                 },
+                                 error: function () {
+                                     layer.msg("异常");
+                                 }
+
+                             }
+                         );
+                         layer.open({
+                             type: 2,
+                             area: [($(window).width() * 0.9) + 'px', ($(window).height() - 50) + 'px'],
+                             fix: false, //不固定
+                             maxmin: true,
+                             shadeClose: true,
+                             shade: 0.4,
+                             title: "编辑",
+                             content: '/test/item-edit',
+                             success: function () {
+                                 //窗口加载成功刷新frame
+                                 // location.replace(location.href);
+                             },
+                             cancel: function () {
+                                 //关闭窗口之后刷新frame
+                                 // location.replace(location.href);
+                             },
+                             end: function () {
+                                 //窗口销毁之后刷新frame
+                                 // location.replace(location.href);
+                             }
+                         });*/
+                        layer.msg('删除重新添加', {time: 1000});
+                    }
+                    break;
+                case 'delete':
+                    if (data.length === 0) {
+                        layer.msg('请选择一行');
+                    } else {
+                        //layer.msg('删除');
+                        layer.confirm('真的删除行么', function (index) {
+                            var checkedArr = [];
+                            data = checkStatus.data;
+                            if (checkStatus.isAll) {
+                                for (var i = 0; i < data.length; i++) {
+                                    checkedArr[i] = data[i].id;
+                                }
+                            }
+
+
+                            //向服务端发送删除指令
+                            $.ajax(
+                                {
+                                    contentType: "application/json",
+                                    type: 'post',
+                                    url: '/deleteUserList',
+                                    datatype: "json",
+                                    data: {id: checkedArr},
+                                    success: function (result) {
+                                        if (result.code == 0) {
+                                            //obj.del(); //删除对应行（tr）的DOM结构
+                                            layer.close(index);
+                                        }
+                                        else {
+
+                                        }
+
+                                    },
+                                    error: function () {
+                                        layer.msg('异常');
+                                    }
+                                }
+                            );
+                        });
+                    }
+                    break;
+            }
+            ;
+        });
+        table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                , layEvent = obj.event; //获得 lay-event 对应的值
+            if (layEvent === 'detail') {
+
+                //layer.msg('查看操作'+obj.data.ciurPic);
+                /*$.ajax(
+                    {
+                        type: "post",
+                        url: "/ajaxtest",
+                        datatype: "json",
+                        data:obj.data.field,
+                        success:function (data1) {
+                            if (data1.result=='SUCCESS') {
+                                setTimeout(function () {
+                                    window.location.href = "/index.jsp";
+                                },1000)
+                            }
+                            else {
+                                lay.msg(data1.errorMsg,{time: 1000});
+                            }
+                        },
+                        error:function () {
+                            layer.msg("yichang");
+                        }
+
+                    }
+                );*/
+                /* layer.open({
+                     type: 2,
+                     area: [($(window).width()*0.9)+'px', ($(window).height() - 50) +'px'],
+                     fix: false, //不固定
+                     maxmin: true,
+                     shadeClose: true,
+                     shade:0.4,
+                     title: "查看",
+                     content: '/test/admin-add',
+                     success: function(){
+                         //窗口加载成功刷新frame
+                         // location.replace(location.href);
+                     },
+                     cancel:function(){
+                         //关闭窗口之后刷新frame
+                         // location.replace(location.href);
+                     },
+                     end:function(){
+                         //窗口销毁之后刷新frame
+                         // location.replace(location.href);
+                     }
+                 });*/
+                // x_admin_show('商城首页','/test/index');
+                testShow()
+            } else if (layEvent === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del(); //删除对应行（tr）的DOM结构
+                    layer.close(index);
+                    //向服务端发送删除指令
+                    $.ajax(
+                        {
+                            type: 'get',
+                            url: '/deleteAdmin',
+                            datatype: "json",
+                            data: {id: obj.data.id},
+                            success: function (result) {
+                                if (result.code == 0) {
+                                    layer.msg("成功");
+                                }
+                                else {
+                                    layer.msg("失败");
+                                }
+
+                            },
+                            error: function () {
+                                layer.msg('异常');
+                            }
+                        }
+                    );
+
+                });
+            } else if (layEvent === 'edit') {
+                layer.msg('删除重新添加', {time: 1000});
+                /* layer.msg('编辑操作');
+                 layer.open({
+                     type: 2,
+                     area: [($(window).width() * 0.9) + 'px', ($(window).height() - 50) + 'px'],
+                     fix: false, //不固定
+                     maxmin: true,
+                     shadeClose: true,
+                     shade: 0.4,
+                     title: "编辑",
+                     content: '/test/item-edit',
+                     success: function () {
+                         //窗口加载成功刷新frame
+                         // location.replace(location.href);
+                     },
+                     cancel: function () {
+                         //关闭窗口之后刷新frame
+                         // location.replace(location.href);
+                     },
+                     end: function () {
+                         //窗口销毁之后刷新frame
+                         // location.replace(location.href);
+                     }
+                 });*/
+            }
+        });
+        form.on('submit(sreach)',function (data) {
+            table.reload('test', {
+                where: { //设定异步数据接口的额外参数，任意设
+                    //id: $("#orderId").val()
+                    start: $("#start").val()
+                    ,end: $("#end").val()
+                    ,userName: $("#userName").val()
+                    //,bbb: 'yyy'
+                    //…
+                }
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        })
     });
 </script>
 <script>var _hmt = _hmt || []; (function() {

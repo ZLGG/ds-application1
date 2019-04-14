@@ -1,11 +1,14 @@
 package com.zlg.bs.item.ctrl;
 
+import com.sun.mail.imap.protocol.ID;
 import com.zlg.bs.center.user.vo.ResponseDto;
+import com.zlg.bs.item.service.ItemService;
 import com.zlg.bs.vo.BuyToDayResultVo;
 import com.zlg.bs.vo.IndexResultVo;
 import com.zlg.bs.vo.Item;
 import com.zlg.bs.vo.Result;
 import eo.Catalog;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,9 @@ import java.util.List;
 
 @Controller
 public class ItemController {
+    @Autowired
+    private ItemService itemService;
+
     @ResponseBody
     @RequestMapping("/getCommodity")
     public String getCommodity(HttpServletRequest request) {
@@ -127,16 +133,17 @@ public class ItemController {
 
     @ResponseBody
     @RequestMapping("/getItemList")
-    public Result getItemList(String page,String limit) {
-        Item item = new Item();
+    public Result getItemList(Integer page,Integer limit) {
+        /*Item item = new Item();
         item.setId("123");
         item.setColor("hong");
         item.setCiurPic("$200");
         item.setImg("jfsfj");
         item.setDiscount("5zhe");
         ArrayList<Item> items = new ArrayList<>();
-        items.add(item);
-        return new Result(0,"chenggong",items,100);
+        items.add(item);*/
+        Result result = itemService.selectItem(page, limit);
+        return result;
     }
 
     @RequestMapping("/toIndex")
@@ -188,9 +195,14 @@ public class ItemController {
 
     @ResponseBody
     @RequestMapping("/addItem")
-    public ResponseDto addItem(HttpServletRequest request) {
+    public ResponseDto addItem(HttpServletRequest request,Item item) {
         String imgUrl = request.getParameter("imgUrl");
         imgUrl = "/image/" + imgUrl;
+        String isDiscount = request.getParameter("isDiscount");
+        String title = request.getParameter("title");
+        String sellPrice = request.getParameter("sellPrice");
+        String color = request.getParameter("color");
+        itemService.insetItem(item);
         return new ResponseDto<>("增加成功");
     }
 
@@ -221,11 +233,17 @@ public class ItemController {
                 "}";
     }
 
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping("/getIndex")
     public IndexResultVo getIndex() {
         IndexResultVo indexResultVo = new IndexResultVo();
         indexResultVo.setStatus("0");
         return indexResultVo;
+    }*/
+
+    @RequestMapping("/delItem")
+    public Result delItem(Item Item) {
+        itemService.delItem(Item.getId());
+        return new Result(0, "", "");
     }
 }

@@ -18,7 +18,7 @@
 <body>
 <script type="text/html" id="barDemo">
     <%--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail"><i class="layui-icon">&#xe60a;</i></a>--%>
-    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
+   <%-- <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>--%>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
 </script>
 <div class="x-nav">
@@ -86,7 +86,7 @@
         //执行一个 table 实例
         table.render({
             elem: '#demo'
-            ,height: 420
+            ,height: 560
             ,url: '/getItemList' //数据接口
             ,title: '商品表'
             ,page: true //开启分页
@@ -95,10 +95,10 @@
             ,cols: [[ //表头
                 {type: 'checkbox', fixed: 'left'}
                 // ,{field: 'id', title: 'ID', width:80, sort: true, fixed: 'left', totalRowText: '合计：'}
-                ,{field: 'title', title: '商品', width:80}
-                ,{field: 'catalog', title: '类目', width:80, sort: true }
-                ,{field: 'ciurPic', title: '现价', width: 90, sort: true }
-                ,{field: 'OriPic', title: '原价', width:80, sort: true}
+                ,{field: 'title', title: '商品', width:160}
+               // ,{field: 'catalog', title: '类目', width:80, sort: true }
+                ,{field: 'original', title: '现价', width: 90, sort: true }
+                ,{field: 'original', title: '原价', width:80, sort: true}
                 ,{field: 'discount', title:'折扣',width: 100}
                 /*,{field: 'score', title: '评分', width: 80, sort: true, totalRow: true}
                 ,{field: 'city', title: '城市', width:150}
@@ -260,11 +260,35 @@
                 });*/
                 // x_admin_show('商城首页','/test/index');
                 testShow()
-            } else if(layEvent === 'del'){
+            }
+            else if(layEvent === 'del'){
                 layer.confirm('真的删除行么', function(index){
                     obj.del(); //删除对应行（tr）的DOM结构
                     layer.close(index);
                     //向服务端发送删除指令
+                    $.ajax(
+                        {
+                            type: "get",
+                            url: "/delItem",
+                            datatype: "json",
+                            data:obj.data,
+                            success:function (data) {
+                                if (data.code==0) {
+                                    /* setTimeout(function () {
+                                         window.location.href = "/index.jsp";
+                                     },1000)*/
+                                    layer.msg("删除成功",{time:1000});
+                                }
+                                else {
+                                    lay.msg(data.errorMsg,{time: 1000});
+                                }
+                            },
+                            error:function () {
+                                layer.msg("异常");
+                            }
+
+                        }
+                    );
                 });
             } else if(layEvent === 'edit'){
                 layer.msg('编辑操作');

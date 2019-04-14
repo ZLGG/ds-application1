@@ -25,11 +25,11 @@
 <div class="x-body">
     <form class="layui-form">
         <div class="layui-form-item">
-            <label for="isDiscount" class="layui-form-label">
+            <label for="discount" class="layui-form-label">
                 <span class="x-red">*</span>商品类型
             </label>
             <div class="layui-input-inline">
-                <select name="isDiscount" id="isDiscount">
+                <select name="discount" id="discount">
                     <option value="0">普通商品</option>
                     <option value="9">9折商品</option>
                     <option value="8">8折商品</option>
@@ -54,7 +54,7 @@
                 <span class="x-red">*</span><%--将会成为您唯一的登入名--%>
             </div>
         </div>
-        <div class="layui-form-item">
+        <%--<div class="layui-form-item">
             <label for="catalog" class="layui-form-label">
                 <span class="x-red">*</span>商品分类
             </label>
@@ -66,15 +66,15 @@
                 </select>
             </div>
             <div class="layui-form-mid layui-word-aux">
-                <span class="x-red">*</span><%--将会成为您唯一的登入名--%>
+                <span class="x-red">*</span>&lt;%&ndash;将会成为您唯一的登入名&ndash;%&gt;
             </div>
-        </div>
+        </div>--%>
         <div class="layui-form-item">
-            <label for="sellPrice" class="layui-form-label">
+            <label for="original" class="layui-form-label">
                 <span class="x-red">*</span>售价
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="sellPrice" name="sellPrice" required="" lay-verify="required"
+                <input type="text" id="original" name="original" required="" lay-verify="required"
                        autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid layui-word-aux">
@@ -94,7 +94,7 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
+       <%-- <div class="layui-form-item">
             <label for="isSellerFair" class="layui-form-label">
                 <span class="x-red">*</span>是否卖家承担运费
             </label>
@@ -104,13 +104,13 @@
                     <option>否</option>
                 </select>
             </div>
-        </div>
+        </div>--%>
         <div class="layui-form-item" hidden>
-            <label for="imgUrl" class="layui-form-label">
+            <label for="img" class="layui-form-label">
                 <span class="x-red">*</span>图片url
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="imgUrl" name="imgUrl" required="" lay-verify="required"
+                <input type="text" id="img" name="img" required="" lay-verify="required"
                        autocomplete="off" class="layui-input" >
             </div>
             <div class="layui-form-mid layui-word-aux">
@@ -149,7 +149,7 @@
             , upload = layui.upload
             , $ = layui.jquery
             , layer = layui.layer;
-        //获取所有类目
+     /*   //获取所有类目
         $.ajax(
             {
                 type: "get",
@@ -157,9 +157,9 @@
                 datatype: "json",
                 success:function (data) {
                     if (data.result=='SUCCESS') {
-                       /* setTimeout(function () {
+                       /!* setTimeout(function () {
                             window.location.href = "/index.jsp";
-                        },1000)*/
+                        },1000)*!/
                         //layer.msg(data);
                     }
                     else {
@@ -171,7 +171,7 @@
                 }
 
             }
-        );
+        );*/
 
 
 
@@ -186,12 +186,12 @@
                     datatype: "json",
                     data:data.field,
                     success:function (data) {
-                        if (data.result=='SUCCESS') {
+                        if (data.code==0) {
                             /* setTimeout(function () {
                                  window.location.href = "/index.jsp";
                              },1000)*/
                             //layer.msg(data);
-                           /* layer.alert("增加成功", {icon: 6},function () {
+                            layer.alert("增加成功", {icon: 6},function () {
                                 // 获得frame索引
                                 var index = parent.layer.getFrameIndex(window.name);
                                 //关闭当前frame
@@ -200,14 +200,14 @@
                                 parent.layer.close(index);
                                 // 可以对父窗口进行刷新
                                 x_admin_father_reload();
-                            });*/
+                            });
                         }
                         else {
                             lay.msg(data.errorMsg,{time: 1000});
                         }
                     },
                     error:function () {
-                        layer.msg("商品分类获取失败");
+                        layer.msg("异常");
                     }
 
                 }
@@ -243,7 +243,7 @@
                     return layer.msg('上传失败');
                 }
                 //上传成功
-                $('#imgUrl').attr('value', res.data);
+                $('#img').attr('value', res.data);
             }
             ,error: function(){
                 $('#imgUrl').attr('value','zlg');

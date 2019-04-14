@@ -4,13 +4,13 @@ import lombok.Data;
 
 @Data
 public class Item {
-    private String id;
+    private Integer id;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -28,6 +28,7 @@ public class Item {
     private String img;
     //商品标题
     private String title;
+    private  String text;
     //现价
     private String ciurPic;
     //原价
