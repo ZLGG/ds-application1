@@ -10,7 +10,7 @@ public class OrderEo {
         private Long id;
         private Integer itemId;
         private String orderNo;
-        private Long tradeNo;
+        private String tradeNo;
         private Long accountId;
         private Integer status;
         private Integer totalItemNum;

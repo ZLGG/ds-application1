@@ -63,7 +63,7 @@
         //执行一个 table 实例
         table.render({
             elem: '#demo'
-            ,height: 420
+           // ,height: 420
             ,url: '/getBlackGetInformation' //数据接口
             ,title: '资讯列表'
             ,page: true //开启分页
@@ -76,15 +76,6 @@
                 ,{field: 'infoCont',title:'内容',width:480}
                 //,{field: 'img', title:'图片',width: 80}
                 ,{field: 'data', title: '时间', width:180}
-                /*,{field: 'score', title: '评分', width: 80, sort: true, totalRow: true}
-                ,{field: 'city', title: '城市', width:150}
-                ,{field: 'sign', title: '签名', width: 200}
-                ,{field: 'classify', title: '职业', width: 100}
-                ,{field: 'wealth', title: '财富', width: 135, sort: true, totalRow: true}
-                ,{field: 'color', title:'颜色',width: 80}
-                ,{field: 'ciurPic', title:'价格',width: 80}
-                ,{field: 'img', title:'图片',width: 80}
-                ,{field: 'discount', title:'折扣',width: 80}*/
                 ,{field: 'right', width: 80, align:'center', toolbar: '#barDemo'}
             ]]
         });

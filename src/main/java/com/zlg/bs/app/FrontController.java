@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.zlg.bs.app.service.MallService;
 import com.zlg.bs.center.user.vo.ResponseDto;
 import com.zlg.bs.item.service.ItemService;
+import com.zlg.bs.user.eo.UserEo;
 import com.zlg.bs.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,36 +26,29 @@ public class FrontController {
     MallService MallService;
     @Autowired
     private ItemService ItemService;
+
     @ResponseBody
     @RequestMapping("/getInformation")
-    public String getInformation() {
-        Information information = new Information();
-        return "{\n" +
-                "   \"status\":0,\n" +
-                "  \"listCont\":[\n" +
-                "    {\"img\":\"/static/img/new1.jpg\",\"text\":\"周岁内的宝宝消化不良拉肚子怎么办?\",\"data\":\"2016-12-24 16:33:26\",\"infoCont\":\"宝宝在周岁之前体质相对较弱，特别是薄弱肠道，一不注意就会拉肚子;那么宝宝消化不良拉肚子\"},\n" +
-                "    {\"img\":\"/static/img/new2.jpg\",\"text\":\"周岁内的宝宝消化不良拉肚子怎么办?\",\"data\":\"2016-12-24 16:33:26\",\"infoCont\":\"宝宝在周岁之前体质相对较弱，特别是薄弱肠道，一不注意就会拉肚子;那么宝宝消化不良拉肚子\"}\n" +
-                "  ]\n" +
-                "}";
+    public ImformationResultVo getInformation(HttpServletRequest servletRequest) {
+        String account = servletRequest.getParameter("account");
+        String pagesize = servletRequest.getParameter("pagesize");
+        Integer page = 1;
+        Integer limit = 10;
+        if (!(account == null || pagesize == null)) {
+            page = Integer.parseInt(account);
+            limit = Integer.parseInt(pagesize);
+        }
+        ImformationResultVo imformationResultVo = MallService.selectFrontInformation(page, limit);
+        return imformationResultVo;
+
+
     }
     @ResponseBody
     @RequestMapping("/getBlackGetInformation")
     public Result getBlackGetInformation(Integer page,Integer limit) {
-        /*Information information = new Information();
-        information.setData("neirong");
-        information.setInfoCont("infocont");
-        information.setText("text");
-        List informationList = new ArrayList<>();
-        informationList.add(information);*/
+
         Result result = MallService.selectInformation(page, limit);
         return result;
-        /*return "{\n" +
-                "   \"status\":0,\n" +
-                "  \"listCont\":[\n" +
-                "    {\"img\":\"/static/img/new1.jpg\",\"text\":\"周岁内的宝宝消化不良拉肚子怎么办?\",\"data\":\"2016-12-24 16:33:26\",\"infoCont\":\"宝宝在周岁之前体质相对较弱，特别是薄弱肠道，一不注意就会拉肚子;那么宝宝消化不良拉肚子\"},\n" +
-                "    {\"img\":\"/static/img/new2.jpg\",\"text\":\"周岁内的宝宝消化不良拉肚子怎么办?\",\"data\":\"2016-12-24 16:33:26\",\"infoCont\":\"宝宝在周岁之前体质相对较弱，特别是薄弱肠道，一不注意就会拉肚子;那么宝宝消化不良拉肚子\"}\n" +
-                "  ]\n" +
-                "}";*/
     }
 
     @ResponseBody
@@ -129,5 +124,20 @@ public class FrontController {
         }
         session.setAttribute("item", item);
         return "details";
+    }
+    @ResponseBody
+    @RequestMapping("/setAdress")
+    public Result setAdress(HttpServletRequest servletRequest,HttpSession session) {
+        UserEo user = (UserEo) session.getAttribute("user");
+        if (user == null) {
+            return new Result(-1, "", "");
+        }
+        String province = servletRequest.getParameter("province");
+        String city = servletRequest.getParameter("city");
+        String area = servletRequest.getParameter("area");
+        String address = servletRequest.getParameter("address");
+        address = province + city + area + address;
+        MallService.setAddress(user.getId(),address);
+        return new Result(0,"","");
     }
 }

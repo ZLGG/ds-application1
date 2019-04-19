@@ -480,15 +480,15 @@
           <div class="login">
             <c:choose>
               <c:when test="${sessionScope.user!=null}">
-                <div class="login">${sessionScope.user.nickName}</div>
+                <div class="login">${sessionScope.user.userName}</div>
               </c:when>
               <c:otherwise>
-                <div class="login"><a href="login.html">登录</a></div>
+                <div class="login"><a href="/test/login">登录</a></div>
               </c:otherwise>
             </c:choose>
           </div>
-          <div class="sp-cart"><a href="/test/shopcart">购物车</a><%--<span>2</span>--%></div>
-          <div class="sp-cart"><a href="/test/order">订单</a></div>
+          <%--<div class="sp-cart"><a href="/test/shopcart">购物车</a>&lt;%&ndash;<span>2</span>&ndash;%&gt;</div>
+          <div class="sp-cart"><a href="/test/order">订单</a></div>--%>
 
         </div>
       </div>
@@ -527,7 +527,7 @@
         </div>
       </div>
       <div class="category-con">
-        <%--<div class="category-inner-con w1200">
+        <div class="category-inner-con w1200">
           <div class="category-type">
             <h3>全部分类</h3>
           </div>
@@ -577,7 +577,7 @@
               </ul>
             </div>
           </div>
-        </div>--%>
+        </div>
         <div class="category-banner">
           <div class="w1200">
             <img src="/static/img/banner1.jpg">
@@ -684,7 +684,7 @@
           <div class="product-item-box layui-clear">
             {{# layui.each(d.productList.item,function(index,item){}}
             <div class="list-item">
-              <a href="javascript:;"><img src="{{item.img}}"></a>
+              <a href="/todetail?id={{item.id}}"><img src="{{item.img}}"></a>
               <p>{{item.text}}</p>
               <span>{{item.price}}</span>
             </div>

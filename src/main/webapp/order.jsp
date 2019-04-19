@@ -18,8 +18,8 @@
         </p>
         <div class="sn-quick-menu">
             <div class="login"><a href="/test/login">登录</a></div>
-            <div class="sp-cart"><a href="/test/shopcart">购物车</a></div>
-            <div class="sp-cart"><a href="/test/order">订单</a></div>
+            <%--<div class="sp-cart"><a href="/test/shopcart">购物车</a></div>
+            <div class="sp-cart"><a href="/test/order">订单</a></div>--%>
 
         </div>
     </div>

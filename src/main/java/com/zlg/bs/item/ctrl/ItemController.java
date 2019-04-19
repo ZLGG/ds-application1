@@ -3,10 +3,7 @@ package com.zlg.bs.item.ctrl;
 import com.sun.mail.imap.protocol.ID;
 import com.zlg.bs.center.user.vo.ResponseDto;
 import com.zlg.bs.item.service.ItemService;
-import com.zlg.bs.vo.BuyToDayResultVo;
-import com.zlg.bs.vo.IndexResultVo;
-import com.zlg.bs.vo.Item;
-import com.zlg.bs.vo.Result;
+import com.zlg.bs.vo.*;
 import eo.Catalog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,49 +25,34 @@ public class ItemController {
 
     @ResponseBody
     @RequestMapping("/getCommodity")
-    public String getCommodity(HttpServletRequest request) {
+    public CommodityResultVo getCommodity(HttpServletRequest request,Integer page,Integer limit) {
         String account = request.getParameter("account");
         String pagesize = request.getParameter("pagesize");
-        return "{\n" +
-                "  \"status\":0,\n" +
-                "  \"count\":150,\n" +
-                "  \"menu\":\n" +
-                "    {\"milk\":{\n" +
-                "        \"content\":[\n" +
-                "          {\"img\":\"/static/img/paging_img1.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"},\n" +
-                "          {\"img\":\"/static/img/paging_img2.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"},\n" +
-              /*  "          {\"img\":\"/static/img/paging_img3.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"},\n" +
-                "          {\"img\":\"/static/img/paging_img1.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"},\n" +
-                "          {\"img\":\"/static/img/paging_img2.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"},\n" +
-                "          {\"img\":\"/static/img/paging_img3.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"},\n" +
-                "          {\"img\":\"/static/img/paging_img1.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"},\n" +
-                "          {\"img\":\"/static/img/paging_img2.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"},\n" +
-                "          {\"img\":\"/static/img/paging_img3.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"},\n" +
-                "          {\"img\":\"/static/img/paging_img1.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"},\n" +
-                "          {\"img\":\"/static/img/paging_img2.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"},\n" +*/
-                "          {\"img\":\"/static/img/paging_img3.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"}\n" +
-                "        ]\n" +
-                "      }\n" +
-                "    }\n" +
-                "}\n";
+        if (account == null || pagesize == null) {
+            page = 1;
+            limit = 6;
+        } else {
+            page = Integer.parseInt(account);
+            limit = Integer.parseInt(pagesize);
+        }
+        CommodityResultVo commodityResultVo = itemService.selectItemAll(page, limit);
+        List<Item> items = commodityResultVo.getMenu().getMilk().getContent();
+        for (Item item : items) {
+            if (item.getDiscount().equals("0")) {
+                item.setPri(item.getOriginal());
+            } else {
+                double i = Double.parseDouble(item.getOriginal()) * Double.parseDouble(item.getDiscount())/10;
+                item.setPri(String.valueOf(i));
+            }
+        }
+        return commodityResultVo;
+
     }
 
     @RequestMapping("/getCount")
     @ResponseBody
     public String getCommodityCount() {
-        return "{\n" +
-                "  \"status\":0,\n" +
-                 "  \"count\":150,\n" +
-                "  \"menu\":\n" +
-                "    {\"milk\":{\n" +
-                "        \"content\":[\n" +
-               /* "          {\"img\":\"/static/img/paging_img1.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"},\n" +
-                "          {\"img\":\"/static/img/paging_img2.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"},\n" +
-                "          {\"img\":\"/static/img/paging_img3.jpg\",\"title\":\"森系小清新四件套\",\"pri\":\"￥200\",\"nub\":\"1266付款\"}\n" +*/
-                "        ]\n" +
-                "      }\n" +
-                "    }\n" +
-                "}\n";
+        return "";
     }
     @RequestMapping("/getCount1")
     @ResponseBody

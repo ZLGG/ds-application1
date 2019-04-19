@@ -20,4 +20,7 @@ public interface InformationMapper {
 
     @Update("update information set dr=1 where id =#{id}")
     void deleteInformation(@Param("id") Integer id);
+
+    @Insert("insert into address(userId,address) values(#{userId},#{address})")
+    void setAddress(@Param("userId") Long userId, @Param("address") String address);
 }

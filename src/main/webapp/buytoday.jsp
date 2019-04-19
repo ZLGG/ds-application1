@@ -14,11 +14,13 @@
     <div class="site-nav w1200">
       <p class="sn-back-home">
         <i class="layui-icon layui-icon-home"></i>
-        <a href="#">首页</a>
+        <a href="/test/index">首页</a>
       </p>
       <div class="sn-quick-menu">
-        <div class="login"><a href="login.html">登录</a></div>
+        <div class="login"><a href="/test/login">登录</a></div>
+<%--
         <div class="sp-cart"><a href="shopcart.html">购物车</a><span>2</span></div>
+--%>
       </div>
     </div>
   </div>
@@ -29,7 +31,7 @@
     <div class="headerLayout w1200">
       <div class="headerCon">
         <h1 class="mallLogo">
-          <a href="#" title="母婴商城">
+          <a href="/test/index" title="母婴商城">
             <img src="/static/img/logo.png">
           </a>
         </h1>

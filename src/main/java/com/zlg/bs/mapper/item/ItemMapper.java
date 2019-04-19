@@ -30,4 +30,7 @@ public interface ItemMapper {
     @Select("select * from it_item where dr = 0 and discount!= 0  ORDER BY id DESC limit 0,8")
     List<Item> selectItemCount();
 
+    @Select("select SQL_CALC_FOUND_ROWS * from it_item where dr = 0 limit #{page},#{limit}")
+    List<Item> selectItemAll(@Param("page") Integer page, @Param("limit") Integer limit);
+
 }

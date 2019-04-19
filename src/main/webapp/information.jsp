@@ -18,8 +18,8 @@
       </p>
       <div class="sn-quick-menu">
         <div class="login"><a href="/test/login">登录</a></div>
-        <div class="sp-cart"><a href="/test/shopcart">购物车</a></div>
-        <div class="sp-cart"><a href="/test/order">订单</a></div>
+        <%--<div class="sp-cart"><a href="/test/shopcart">购物车</a></div>
+        <div class="sp-cart"><a href="/test/order">订单</a></div>--%>
 
       </div>
     </div>
@@ -31,7 +31,7 @@
     <div class="headerLayout w1200">
       <div class="headerCon">
         <h1 class="mallLogo">
-          <a href="#" title="母婴商城">
+          <a href="/test/index" title="母婴商城">
             <img src="/static/img/logo.png">
           </a>
         </h1>
@@ -238,9 +238,9 @@
         <img src="/img/new1.jpg" alt="">
       </div>
       <div class="text">
-        <h4>周岁内的宝宝消化不良拉肚子怎么办?</h4>
-        <p class="data">2016-12-24 16:33:26</p>
-        <p class="info-cont">宝宝在周岁之前体质相对较弱，特别是薄弱肠道，一不注意就会拉肚子;那么宝宝消化不良拉肚子</p>
+        <h4>{{item.text}}</h4>
+        <p class="data">{{item.data}}</p>
+        <p class="info-cont">{{item.infoCont}}</p>
       </div>
     </div>
     {{# })}}
@@ -251,10 +251,8 @@
   }).use(['mm','laypage'],function(){
       var
       mm = layui.mm,laypage = layui.laypage;
-      laypage.render({
-        elem: 'demo0'
-        ,count: 100 //数据总数
-      });
+
+
     // 模版引擎导入
      var html = demo.innerHTML;
      var listCont = document.getElementById('list-cont');
@@ -262,8 +260,27 @@
         //url: '../json/information.json',
           url:'/getInformation',
         success : function(res){
-          console.log(res)
-          listCont.innerHTML = mm.renderHtml(html,res)
+          console.log(res);
+          //listCont.innerHTML = mm.renderHtml(html,res)
+            laypage.render({
+                elem: 'demo0'
+                ,count: res.count //数据总数
+                , jump: function (obj, first) {
+                    mm.request({
+                        //url: '../json/information.json',
+                        url:'/getInformation',
+                        data:{account:obj.curr,pagesize:obj.limit},
+                        success : function(res){
+                            console.log(res);
+                            listCont.innerHTML = mm.renderHtml(html,res);
+                        },
+                        error: function(res){
+                            console.log(res);
+                        }
+                    })
+
+                }
+            });
         },
         error: function(res){
           console.log(res);

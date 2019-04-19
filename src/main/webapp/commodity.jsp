@@ -29,8 +29,8 @@
                     <div class="login"><a href="/test/login">登录</a></div>
                 </c:otherwise>
             </c:choose>
-            <div class="sp-cart"><a href="/test/shopcart">购物车</a><span></span></div>
-            <div class="sp-cart"><a href="/test/order">订单</a></div>
+            <%--<div class="sp-cart"><a href="/test/shopcart">购物车</a><span></span></div>
+            <div class="sp-cart"><a href="/test/order">订单</a></div>--%>
         </div>
     </div>
 </div>
@@ -40,7 +40,7 @@
     <div class="headerLayout w1200">
         <div class="headerCon">
             <h1 class="mallLogo">
-                <a href="#" title="母婴商城">
+                <a href="/test/index" title="母婴商城">
                     <img src="/static/img/logo.png">
                 </a>
             </h1>
@@ -309,13 +309,13 @@
                       {{# layui.each(d.menu.milk.content,function(index,item){}}
                         <div class="item">
                           <div class="img">
-                            <a href="javascript:;"><img src="{{item.img}}"></a>
+                            <a href="/todetail?id={{item.id}}"><img src="{{item.img}}" width="280" height="250"></a>
                           </div>
                           <div class="text">
                             <p class="title">{{item.title}}</p>
                             <p class="price">
                               <span class="pri">{{item.pri}}</span>
-                              <span class="nub">{{item.nub}}</span>
+                             <%-- <span class="nub">{{item.nub}}</span>--%>
                             </p>
                           </div>
                         </div>
@@ -360,14 +360,14 @@
                 }
             );
         mm.request({
-            url: '/getCount',
+            url: '/getCommodity',
             //ata:{account:obj.curr,pagesize:obj.limit},
             success : function(res){
-                console.log(res)
+                console.log(res);
                 //count = res.count;
                 laypage.render({
                     elem: 'demo0',
-                    limit:3
+                    limit:6
                     , count:res.count//数据总数
                     , jump: function (obj, first) {
                         mm.request({
