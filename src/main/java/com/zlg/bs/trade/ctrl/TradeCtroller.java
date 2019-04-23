@@ -11,10 +11,9 @@ import com.zlg.bs.item.service.ItemService;
 import com.zlg.bs.trade.eo.OrderEo;
 import com.zlg.bs.trade.service.OrderService;
 import com.zlg.bs.user.eo.UserEo;
-import com.zlg.bs.vo.Constans;
-import com.zlg.bs.vo.Item;
-import com.zlg.bs.vo.Result;
-import com.zlg.bs.vo.ShopcartResultVo;
+import com.zlg.bs.vo.*;
+import org.apache.commons.lang.StringUtils;
+import org.apache.taglibs.standard.lang.jstl.OrOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -34,21 +33,23 @@ public class TradeCtroller {
     @Autowired
     private OrderService OrderService;
     @RequestMapping("/handleOrder")
-    public String handleOrder(HttpServletRequest request, HttpSession HttpSession,Integer id) {
+    public String handleOrder(HttpServletRequest request, HttpSession HttpSession) {
         Map<String, String[]> map = request.getParameterMap();
         String s = JSON.toJSONString(map);
         String tradeNo = request.getParameter("trade_no");
         String outTradeNo = request.getParameter("out_trade_no");
         String totalAmount = request.getParameter("total_amount");
-        OrderEo orderEo = new OrderEo();
+        OrderEo orderEo1 = OrderService.selectOrderByOrderNo(outTradeNo);
+
         HttpSession.setAttribute("user", new UserEo());
         UserEo user = (UserEo) HttpSession.getAttribute("user");
-        orderEo.setAccountId(user.getId());
+        /*orderEo1.setAccountId(user.getId());
         orderEo.setPayAmount(Double.parseDouble(totalAmount));
         orderEo.setOrderNo(outTradeNo);
-        orderEo.setTradeNo(tradeNo);
         orderEo.setItemId(id);
-        OrderService.insertOrder(orderEo);
+        OrderService.insertOrder(orderEo);*/
+        orderEo1.setTradeNo(tradeNo);
+        OrderService.orderPay(orderEo1);
         return "index";
     }
 
@@ -61,20 +62,23 @@ public class TradeCtroller {
     String ALIPAY_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAum32xhRl1km2Uwp3tvNr3FSWuDVbovpTNxeALYhwgWWncpkL7nphOpbooj3fQpq4RkPiMsv5CiEW+cWNTp61RSlWgmJ1fboLHM6S2EAY5ZHmMUxXxjCU0ms9zeR9xY2QxTWUvUyqaP+zgIOiJzRz33TaHTrEz1hy+cI8J/UFdIINIhcYyl3H8GvhB0cKK+RS05FjWHTjPdCCh4eLqMWfyCURSgrzPsH/Sjy83VaTN82+6sKxYxjHgioybdBOlB3t6l+Bng+Q/AMBkY9j+Nee1e3om6JZAVihGddiTHbavziD4duRf8Bw6rJei7f5j0aZOh1am2Cng/whdPDuOE9rSQIDAQAB";
     @ResponseBody
     @RequestMapping(value = "/alipay",method = RequestMethod.POST)
-    public void alipay(HttpServletResponse httpResponse,HttpServletRequest httpRequest,String amount,Integer id) throws Exception{
+    public void alipay(HttpServletResponse httpResponse,HttpServletRequest httpRequest,Double amount,Integer id) throws Exception{
         Item item = ItemService.selectItemById(id);
+        String province = httpRequest.getParameter("province");
+        String city = httpRequest.getParameter("city");
+        String area = httpRequest.getParameter("area");
+        String address = httpRequest.getParameter("address");
+        address = province + city + area + address;
+        HttpSession session = httpRequest.getSession();
+        UserEo user = (UserEo) session.getAttribute("user");
+
 
         AlipayClient alipayClient = new DefaultAlipayClient(Constans.SERVER_URL, Constans.APP_ID, Constans.PRIVATE_KEY,
                 Constans.FORMAT, Constans.CHARSET,Constans.ALIPAY_PUBLIC_KEY , Constans.SINGN_TYPE); //获得初始化的AlipayClient
         AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();//创建API对应的request
-/*
-        http://domain.com/CallBack/return_url.jsp
-                String sdf = new SimpleDateFormat("yyyyMMddHHMMSS").format(new Date());
-
-*/
         Integer id1 = item.getId();
         String date = new SimpleDateFormat("yyyyMMddHHMMSS").format(new Date());
-        alipayRequest.setReturnUrl("http://localhost:8086/handleOrder?id="+id);
+        alipayRequest.setReturnUrl("http://localhost:8086/handleOrder");
         alipayRequest.setNotifyUrl("http://localhost:8086/getUser");//在公共参数中设置回跳和通知地址
         alipayRequest.setBizContent("{" +
                 "    \"out_trade_no\":"+date+"," +
@@ -87,6 +91,9 @@ public class TradeCtroller {
                 "    \"sys_service_provider_id\":\"2088511833207846\"" +
                 "    }"+
                 "  }");//填充业务参数
+
+        createOrder(address,date,id1,amount,user.getId());
+
         String form="";
         try {
             form = alipayClient.pageExecute(alipayRequest).getBody(); //调用SDK生成表单
@@ -100,6 +107,16 @@ public class TradeCtroller {
         httpResponse.getWriter().close();
     }
 
+    private void createOrder(String address,String orderNo,Integer itemId,double amount,Long userId) {
+        OrderEo orderEo = new OrderEo();
+        orderEo.setOrderNo(orderNo);
+        orderEo.setItemId(itemId);
+        orderEo.setPayAmount(amount);
+        orderEo.setAccountId(userId);
+        orderEo.setAddress(address);
+        OrderService.insertOrder(orderEo);
+    }
+
     //调用退款接口
     @ResponseBody
     @RequestMapping("/returnPay")
@@ -108,10 +125,10 @@ public class TradeCtroller {
                 "json", "utf-8",ALIPAY_PUBLIC_KEY , "RSA2"); //获得初始化的AlipayClient
         AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
         request.setBizContent("{" +
-                "    \"out_trade_no\":\"20150320010101002\"," +
-                "    \"trade_no\":\"2019022022001475330500674095\"," +
-                "    \"refund_amount\":0.01," +
-                "    \"refund_reason\":\"正常退款\"," +
+                "    \"out_trade_no\":\"20150320010101002\"," +         //订单号
+                "    \"trade_no\":\"2019022022001475330500674095\"," +  //交易订单号
+                "    \"refund_amount\":0.01," +                         //退款金额
+                "    \"refund_reason\":\"正常退款\"," +                 //退款金额
                 "    \"out_request_no\":\"HZ01RF001\"," +
                 "    \"operator_id\":\"OP001\"," +
                 "    \"store_id\":\"NJ_S_001\"," +
@@ -128,33 +145,29 @@ public class TradeCtroller {
 
     @ResponseBody
     @RequestMapping("/getOrderList")
-    public Result getOrderList(@RequestParam(name="id",required=false,defaultValue="0")String id
+    public Result getOrderList(@RequestParam(name="orderId",required=false,defaultValue="0")String orderId
             , @RequestParam(name="isPay",required=false,defaultValue="0")String isPay
             , @RequestParam(name="start",required=false,defaultValue="0")String start
             , @RequestParam(name="end",required=false,defaultValue="0")String end
-            , @RequestParam(name="status",required=false,defaultValue="0")String status) {
-        Item item = new Item();
-        if (id.equals("1")) {
-            item.setId(123);
-            item.setColor("hong");
-            item.setCiurPic("$200");
-            item.setImg("jfsfj");
-            item.setDiscount("5zhe");
-        } else {
-            item = new Item();
-            item.setId(4234);
-            item.setColor("fsf");
-            item.setCiurPic("$500");
-            item.setImg("/img/a.jpg");
-            item.setDiscount("6zhe");
+            , @RequestParam(name="status",required=false,defaultValue="0")String status, OrderRequestVo OrderRequestVo) {
+        if (StringUtils.isBlank(OrderRequestVo.getOrderId())) {
+            OrderRequestVo.setOrderId(null);
         }
+        if (StringUtils.isBlank(OrderRequestVo.getStart())) {
+            OrderRequestVo.setStart(null);
+        }
+        if (StringUtils.isBlank(OrderRequestVo.getEnd())) {
+            OrderRequestVo.setEnd(null);
+        }
+        if (OrderRequestVo.getIsPay()==null||OrderRequestVo.getIsPay().equals(2)) {
+            OrderRequestVo.setIsPay(null);
+        }
+        if (OrderRequestVo.getStatus()==null||OrderRequestVo.getStatus().equals(0)) {
+            OrderRequestVo.setStatus(null);
+        }
+        Result result = OrderService.selectOrder(OrderRequestVo);
 
-        ArrayList<Item> items = new ArrayList<>();
-        items.add(item);
-        if (id.equals("1")) {
-            return new Result(0,"chenggong",items,50);
-        }
-        return new Result(0,"chenggong",items,100);
+        return result;
 
     }
     @ResponseBody

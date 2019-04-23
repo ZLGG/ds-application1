@@ -59,7 +59,7 @@
             ,slider = layui.slider //滑块
             ,$ = layui.jquery;
 
-        //获取所有分类
+       /* //获取所有分类
         $.ajax(
             {
                 type: "get",
@@ -67,9 +67,9 @@
                 datatype: "json",
                 success: function (data) {
                     if (data.result == 'SUCCESS') {
-                        /*setTimeout(function () {
+                        /!*setTimeout(function () {
                             window.location.href = "/index.jsp";
-                        },1000)*/
+                        },1000)*!/
                     }
                     else {
                         lay.msg(data.errorMsg, {time: 1000});
@@ -80,7 +80,7 @@
                 }
 
             }
-        );
+        );*/
 
 
         //执行一个 table 实例
@@ -97,7 +97,7 @@
                 // ,{field: 'id', title: 'ID', width:80, sort: true, fixed: 'left', totalRowText: '合计：'}
                 ,{field: 'title', title: '商品', width:160}
                // ,{field: 'catalog', title: '类目', width:80, sort: true }
-                ,{field: 'original', title: '现价', width: 90, sort: true }
+                ,{field: 'price', title: '现价', width: 90, sort: true }
                 ,{field: 'original', title: '原价', width:80, sort: true}
                 ,{field: 'discount', title:'折扣',width: 100}
                 /*,{field: 'score', title: '评分', width: 80, sort: true, totalRow: true}

@@ -71,4 +71,12 @@ public class UserController {
         HttpSession.setAttribute("verifyCode",code);
         return new ResponseDto(1);
     }
+
+    @RequestMapping("/session")
+    public String addSession(HttpSession session) {
+        UserEo userEo = new UserEo();
+        userEo.setId(2l);
+        session.setAttribute("user",userEo);
+        return "success";
+    }
 }

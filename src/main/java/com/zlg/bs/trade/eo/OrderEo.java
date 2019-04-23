@@ -7,6 +7,7 @@ import java.io.Serializable;
 @Table
 @Data
 public class OrderEo {
+        private String address;
         private Long id;
         private Integer itemId;
         private String orderNo;

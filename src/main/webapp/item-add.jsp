@@ -127,7 +127,7 @@
             <div class="layui-upload-list">
                 <label  class="layui-form-label">
                 </label>
-                <img class="layui-upload-img" id="demo1" height="120" width="80">
+                <img <%--class="layui-upload-img"--%> id="demo1" height="120" width="80">
                 <p id="demoText"></p>
             </div>
         </div>
@@ -227,7 +227,7 @@
 
         var uploadInst = upload.render({
             elem: '#test1'
-            ,url: '/upload/'
+            ,url: '/upload'
            // ,auto: false //选择文件后不自动上传
            // ,bindAction: '#add' //指向一个按钮触发上传
             ,before: function(obj){

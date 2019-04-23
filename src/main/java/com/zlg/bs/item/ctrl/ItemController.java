@@ -125,6 +125,13 @@ public class ItemController {
         ArrayList<Item> items = new ArrayList<>();
         items.add(item);*/
         Result result = itemService.selectItem(page, limit);
+        for(Item item:(List<Item>)result.getData())
+        if (item.getDiscount().equals("0")) {
+            item.setPrice(item.getOriginal());
+        } else {
+            double i = Double.parseDouble(item.getOriginal()) * Double.parseDouble(item.getDiscount())/10;
+            item.setPrice(String.valueOf(i));
+        }
         return result;
     }
 

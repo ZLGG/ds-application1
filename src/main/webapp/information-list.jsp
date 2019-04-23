@@ -72,7 +72,7 @@
             ,cols: [[ //表头
                 {type: 'checkbox', fixed: 'left'}
                  ,{field: 'id', title: 'ID', width:80, sort: true}
-                ,{field: 'text', title:'讯息',width: 100}
+                ,{field: 'text', title:'讯息',width: 200}
                 ,{field: 'infoCont',title:'内容',width:480}
                 //,{field: 'img', title:'图片',width: 80}
                 ,{field: 'data', title: '时间', width:180}

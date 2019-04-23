@@ -79,7 +79,7 @@
         </div>
         <div class="product-intro layui-clear">
             <div class="preview-wrap">
-                <a href="javascript:;"><img src="${sessionScope.item.img}" height="350" width="350"></a>
+                <a href="javascript:;"><img src="${sessionScope.item.img}" height="300" width="300"></a>
             </div>
             <div class="itemInfo-wrap">
                 <div class="itemInfo">
@@ -131,11 +131,11 @@
                                 </pre>&ndash;%&gt;
                             </div></strong>
                         </p>--%>
-                        <div class="color layui-clear"><%--<span>送&nbsp;&nbsp;&nbsp;&nbsp;至</span>--%>
+                        <%--<div class="color layui-clear">&lt;%&ndash;<span>送&nbsp;&nbsp;&nbsp;&nbsp;至</span>&ndash;%&gt;
                             <div class="color-cont">
                                 <form class="layui-form layui-col-md12  layui-form-pane">
                                  <div class="layui-form-item" id="x-city">
-                                <%--  <label class="layui-form-label">城市联动</label>--%>
+                                &lt;%&ndash;  <label class="layui-form-label">城市联动</label>&ndash;%&gt;
                                 <div class="layui-input-inline">
                                     <select name="province" lay-filter="province">
                                         <option value="">请选择省</option>
@@ -155,9 +155,9 @@
                                     <div class="layui-input-inline">
                                         <input type="text" name="address" lay-verify="required" placeholder="详细地址" autocomplete="off" class="layui-input">
                                     </div>
-                                    <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="demo1" <%--onclick="return false"--%> >确定收获地址</button>
+                                    <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="demo1" &lt;%&ndash;onclick="return false"&ndash;%&gt; >确定收获地址</button>
                             </form> </div>
-                        </div>
+                        </div>--%>
                         <div class="color layui-clear"><span class="title">颜&nbsp;&nbsp;&nbsp;&nbsp;色</span>
                             <div class="color-cont"> <span class="btn active">${sessionScope.item.color}</span></div>
                         </div>
@@ -169,10 +169,34 @@
                         </div>
                     </div>
                     <div class="choose-btns">
-                        <form class="layui-form" action="/alipay?id=${sessionScope.item.id}&amount=${sessionScope.item.price}?" method="post">
-                            <button class="layui-btn layui-btn-primary purchase-btn" type="submit" >
-                                立刻购买
-                            </button>
+                        <form class="layui-form" action="/alipay?id=${sessionScope.item.id}&amount=${sessionScope.item.price}" method="post">
+                            <div class="layui-form-item" id="x-city">
+                                <%--  <label class="layui-form-label">城市联动</label>--%>
+                                <div class="layui-input-inline">
+                                    <select name="province" lay-filter="province" required>
+                                        <option value="">请选择省</option>
+                                    </select>
+                                </div>
+                                <div class="layui-input-inline">
+                                    <select name="city" lay-filter="city" required>
+                                        <option value="">请选择市</option>
+                                    </select>
+                                </div>
+                                <div class="layui-input-inline">
+                                    <select name="area" lay-filter="area" required>
+                                        <option value="">请选择县/区</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-input">
+                                <input type="text" name="address" lay-verify="required" placeholder="详细地址" autocomplete="off" class="layui-input" lay-verify="required" required>
+                            </div>
+                            <div class="button">
+                                <button class="layui-btn layui-btn-primary purchase-btn" type="submit" >
+                                    立刻购买
+                                </button>
+                            </div>
+
                             <%--<button class="layui-btn  layui-btn-danger car-btn"><i class="layui-icon layui-icon-cart-simple"></i>加入购物车</button> --%>
                         </form>
                     </div>
