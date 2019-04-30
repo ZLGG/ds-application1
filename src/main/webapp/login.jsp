@@ -148,7 +148,7 @@
 
         $("#find").click(function() {
             if(!/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test($("#email").val())){
-              layer.msg("请输入正确的邮箱"+email+"asfa"+1+$("#email").val());
+              layer.msg("请输入正确的邮箱");
               return false;
             }
             var obj=this;
@@ -191,21 +191,25 @@
             settime(obj) }
             ,1000) 
         }
-        form.on('submit(demo1)',function (data) {
+        form.on('submit(demo1)',function (data)
+        {
             $.ajax({
                 url:"/login",
                 data:data.field,
                 dataType:"json",
                 type:'post',
                 success:function (result) {
-                    if (result.result=='SUCCESS'){
+                    if (result.code==0){
                         //layer.msg(data1.data, 1000);
                         setTimeout(function () {
                             window.location.href = "/index.jsp";
                         },1000)
                     }
+                    else if (result.code == -1) {
+                        layer.msg("验证码错误");
+                    }
                     else {
-                        layer.msg(result.errorMsg,{time:1000});
+                        layer.msg(result.errorMsg, {time: 1000});
                     }
                     },
                 error:function () {

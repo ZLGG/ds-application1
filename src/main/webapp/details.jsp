@@ -21,13 +21,18 @@
     <div class="site-nav w1200">
         <p class="sn-back-home">
             <i class="layui-icon layui-icon-home"></i>
-            <a href="#">首页</a>
+            <a href="/test/index">首页</a>
         </p>
         <div class="sn-quick-menu">
-            <div class="login"><a href="/test/login">登录</a></div>
-<%--
-            <div class="sp-cart"><a href="shopcart.html">购物车</a><span>2</span></div>
---%>
+            <div class="login"><c:choose>
+                <c:when test="${sessionScope.user!=null}">
+                    <div class="login">${sessionScope.user.accountId}</div>
+                </c:when>
+                <c:otherwise>
+                    <div class="login"><a href="/test/login">登录</a></div>
+                </c:otherwise>
+            </c:choose>
+            </div>
         </div>
     </div>
 </div>
@@ -188,8 +193,11 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="layui-input">
+                            <div class="layui-input-inline">
                                 <input type="text" name="address" lay-verify="required" placeholder="详细地址" autocomplete="off" class="layui-input" lay-verify="required" required>
+                            </div>
+                            <div class="layui-input-inline">
+                                <input type="text" name="person" lay-verify="required" placeholder="收货人" autocomplete="off" class="layui-input" lay-verify="required" required>
                             </div>
                             <div class="button">
                                 <button class="layui-btn layui-btn-primary purchase-btn" type="submit" >

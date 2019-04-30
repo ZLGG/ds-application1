@@ -17,8 +17,9 @@ public class OrderService {
         OrderMapper.InsertOrder(orderEo);
     }
 
-    public Result selectOrder(OrderRequestVo OrderEo) {
-        List<OrderEo> orderEos = OrderMapper.selectOrder(OrderEo);
+    public Result selectOrder(OrderRequestVo OrderEo, Integer page, Integer limit) {
+        page = (page - 1) * limit;
+        List<OrderEo> orderEos = OrderMapper.selectOrder(OrderEo, page, limit);
         Integer count = OrderMapper.selectCount();
         return new Result(0, "", orderEos, count);
     }
@@ -30,5 +31,14 @@ public class OrderService {
 
     public void orderPay(OrderEo orderEo) {
         OrderMapper.orderPay(orderEo);
+    }
+
+    public OrderEo selectOrderById(Integer id) {
+        OrderEo orderEo = OrderMapper.selectOrderById(id);
+        return orderEo;
+    }
+
+    public void returnOrderById(Integer id) {
+        OrderMapper.returnOrderById(id);
     }
 }

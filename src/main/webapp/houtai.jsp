@@ -35,15 +35,15 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    贤心
+                    <%--<img src="http://t.cn/RCzsdCq" class="layui-nav-img">--%>
+                    ${sessionScope.backuser.userName}
                 </a>
                 <dl class="layui-nav-child">
                     <%--<dd><a href="">基本资料</a></dd>
                     <dd><a href="">安全设置</a></dd>--%>
-                        <dd>
+                       <%-- <dd>
                             <a onclick="WeAdminShow('个人信息','/test/admin/edit')">个人信息</a>
-                        </dd>
+                        </dd>--%>
                         <dd>
                             <a onclick="WeAdminShow('切换帐号','/test/back-login')">切换帐号</a>
                         </dd>
@@ -140,9 +140,9 @@
                     <dd>
                         <a data-url="/test/member-list1" data-id="11" data-title="用户列表" href="#" class="site-demo-active" data-type="tabAdd">用户列表</a>
                     </dd>
-                    <dd>
+                   <%-- <dd>
                         <a href="#" data-url="/test/city" data-title="城市联动"  data-id="24" class="site-demo-active" data-type="tabAdd">城市联动</a>
-                    </dd>
+                    </dd>--%>
                 </dl>
             </li>
             <li class="layui-nav-item">

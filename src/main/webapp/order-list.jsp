@@ -63,6 +63,7 @@
                     <option value="0">订单状态</option>
                     <option value="1">待付款</option>
                     <option value="2">已付款</option>
+                    <option value="3">已退款</option>
                     <option value="4">发货中</option>
                     <option value="41">已发货</option>
                     <option value="5">已收货</option>
@@ -129,12 +130,12 @@
         <tr>
             <th lay-data="{type:'checkbox'}"></th>
             <th lay-data="{field:'orderNo', width:180, sort: true}">订单编号</th>
-            <th lay-data="{field:'returnPerson', width:120, edit: 'text'}">收货人</th>
+            <th lay-data="{field:'person', width:120, edit: 'text'}">收货人</th>
             <%--<th lay-data="{field:'email', edit: 'text', minWidth: 80}">邮箱</th>--%>
             <%--<th lay-data="{field:'itemAmount', width:80, sort: true}">总商品数量</th>--%>
             <th lay-data="{field:'payAmount', width:100, sort:true}">支付金额</th>
-            <th lay-data="{field:'status', width:80,minWidth: 100}">订单状态</th>
-            <th lay-data="{field:'isPay',  width:80}">支付状态</th>
+            <th lay-data="{field:'statusName', width:80,minWidth: 100}">订单状态</th>
+            <%--<th lay-data="{field:'isPayName',  width:80}">支付状态</th>--%>
             <th lay-data="{field:'address', edit: 'text'}">收货地址</th>
             <th lay-data="{field:'payTime', sort: true,  width:180}">下单时间</th>
             <th lay-data="{field:'createTime', sort: true,  width:180}">创建时间</th>
@@ -188,22 +189,25 @@
             if (layEvent === 'detail') {
                 testShow()
             } else if (layEvent === 'del') {
-                layer.confirm('真的删除行么', function (index) {
-                    obj.del(); //删除对应行（tr）的DOM结构
+                layer.confirm('确认退款？', function (index) {
+                    /*obj.del(); //删除对应行（tr）的DOM结构*/
                     layer.close(index);
                     //向服务端发送删除指令
                     $.ajax(
                         {
                             type: 'get',
-                            url: '/returnOrder',
+                            url: '/returnPay',
                             datatype: "json",
                             data: {id: obj.data.id},
                             success: function (result) {
                                 if (result.code == 0) {
-                                    layer.msg("成功");
+                                    layer.msg("成功退款");
+                                }
+                                else if (result.code == 1) {
+                                    layer.msg("该订单不可以退款");
                                 }
                                 else {
-                                    layer.msg("失败");
+                                    layer.msg("退款失败");
                                 }
 
                             },

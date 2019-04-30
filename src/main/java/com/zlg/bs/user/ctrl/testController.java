@@ -19,4 +19,15 @@ public class testController {
     public String testUrl(@PathVariable String name,@PathVariable String member) {
         return member+"/"+name;
     }
+
+    @RequestMapping("/singOut")
+    public String singOut(HttpSession session) {
+        session.invalidate();
+        return "login";
+    }
+    @RequestMapping("/singOut1")
+    public String singOut1(HttpSession session) {
+        session.invalidate();
+        return "back-login";
+    }
 }

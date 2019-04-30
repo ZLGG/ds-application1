@@ -480,7 +480,7 @@
           <div class="login">
             <c:choose>
               <c:when test="${sessionScope.user!=null}">
-                <div class="login">${sessionScope.user.userName}</div>
+                <div class="login">${sessionScope.user.accountId}</div>
               </c:when>
               <c:otherwise>
                 <div class="login"><a href="/test/login">登录</a></div>

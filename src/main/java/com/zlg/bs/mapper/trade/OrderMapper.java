@@ -13,7 +13,7 @@ public interface OrderMapper {
     @Select("SELECT FOUND_ROWS() as count;")
     Integer selectCount();
 
-    @Insert("insert into tr_order (item_id,order_no,account_id,status,pay_amount,create_time,address,is_pay) values(#{eo.itemId},#{eo.orderNo},#{eo.accountId},1,#{eo.payAmount},now(),#{eo.address},0)")
+    @Insert("insert into tr_order (item_id,order_no,account_id,status,pay_amount,create_time,address,is_pay,person) values(#{eo.itemId},#{eo.orderNo},#{eo.accountId},1,#{eo.payAmount},now(),#{eo.address},0,#{eo.person})")
     void InsertOrder(@Param("eo") OrderEo orderEo);
 
     @Select("<script>" +
@@ -23,12 +23,19 @@ public interface OrderMapper {
             "<if test='eo.end!=null'>and (pay_time &lt;= #{eo.end} or create_time &lt;= #{eo.end})</if>" +
             "<if test='eo.isPay!=null'>and is_Pay=#{eo.isPay}</if>" +
             "<if test='eo.status!=null'>and status=#{eo.status}</if>" +
+            "limit #{page},#{limit}" +
             "</script>")
-    List<OrderEo> selectOrder(@Param("eo")OrderRequestVo eo);
+    List<OrderEo> selectOrder(@Param("eo")OrderRequestVo eo,@Param("page")Integer page,@Param("limit")Integer limit);
 
     @Select("select * from tr_order where dr=0 and order_no=#{orderNo}")
     OrderEo selectOrderByOrderNo(@Param("orderNo") String orderNo);
 
     @Update("update tr_order set trade_no=#{eo.tradeNo} , status=2 ,is_pay=1 ,pay_time=now()   where order_no=#{eo.orderNo}")
     void orderPay(@Param("eo") OrderEo eo);
+
+    @Select("select * from tr_order where dr=0 and id=#{id}")
+    OrderEo selectOrderById(@Param("id") Integer id);
+
+    @Update("update tr_order set status=3 where id=#{id}")
+    void returnOrderById(@Param("id") Integer id);
 }

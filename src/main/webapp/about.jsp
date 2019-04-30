@@ -17,8 +17,15 @@
         <a href="/test/index">首页</a>
       </p>
       <div class="sn-quick-menu">
-        <div class="login"><a href="/test/login">登录</a></div>
-       <%-- <div class="sp-cart"><a href="/test/shopcart">购物车</a><span>2</span></div>--%>
+        <div class="login"><c:choose>
+          <c:when test="${sessionScope.user!=null}">
+            <div class="login">${sessionScope.user.accountId}</div>
+          </c:when>
+          <c:otherwise>
+            <div class="login"><a href="/test/login">登录</a></div>
+          </c:otherwise>
+        </c:choose>
+        </div>
       </div>
     </div>
   </div>

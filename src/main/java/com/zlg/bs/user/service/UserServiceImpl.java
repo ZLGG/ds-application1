@@ -40,4 +40,18 @@ public class UserServiceImpl {
         UserMapper.deleteAdmin(id);
     }
 
+    public UserEo selectFrontUser(UserEo eo) {
+        UserEo userEo = UserMapper.selectFrontUser(eo);
+        return userEo;
+    }
+
+    public void addAccount(UserEo eo) {
+        UserMapper.addAccount(eo);
+    }
+
+    public UserEo backLogin(UserEo eo) {
+        UserEo userEo = UserMapper.backLogin(eo);
+        return userEo;
+    }
+
 }

@@ -18,6 +18,15 @@ public class UuidUtil {
         return new String(text);
     }
 
+    public static String generateString1() {
+        char[] text = new char[13];
+        Random random = new Random();
+        for (int i = 0; i < 13; i++) {
+            text[i] = SOURCES.charAt(random.nextInt(SOURCES.length()));
+        }
+        return "my_"+new String(text);
+    }
+
     public static String getOrderNo() {
         String orderNo = "";
         UUID uuid = UUID.randomUUID();

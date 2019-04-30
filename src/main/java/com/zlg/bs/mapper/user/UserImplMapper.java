@@ -26,4 +26,13 @@ public interface UserImplMapper {
 
     @Update("update mc_account set dr = 1 and id =#{id}")
     void deleteAdmin(@Param("id") Integer id);
+
+    @Select("select * from mc_account where dr=0 and email=#{eo.email}")
+    UserEo selectFrontUser(@Param("eo") UserEo eo);
+
+    @Insert("insert into mc_account (account_id,email,role,create_Time) values(#{eo.accountId},#{eo.email},0,now())")
+    void addAccount(@Param("eo") UserEo eo);
+
+    @Select("select * from mc_account where dr=0 and account_id=#{eo.accountId} and password=#{eo.password}")
+    UserEo backLogin(@Param("eo") UserEo eo);
 }

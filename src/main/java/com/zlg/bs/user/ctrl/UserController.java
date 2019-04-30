@@ -4,6 +4,7 @@ import com.zlg.bs.center.user.vo.ResponseDto;
 import com.zlg.bs.user.eo.UserEo;
 import com.zlg.bs.user.service.UserServiceImpl;
 import com.zlg.bs.user.util.MailUtil;
+import com.zlg.bs.user.util.UuidUtil;
 import com.zlg.bs.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,4 +80,36 @@ public class UserController {
         session.setAttribute("user",userEo);
         return "success";
     }
+
+    @RequestMapping("/login")
+    public Result frontLogin(UserEo eo,HttpSession session) {
+        String verifyCode = (String) session.getAttribute("verifyCode");
+        if (verifyCode==null||!verifyCode.equals(eo.getPnum())) {
+            return new Result(-1,"验证码错误", null);
+        }
+        UserEo userEo = new UserEo();
+        UserEo userEo1 = userService.selectFrontUser(eo);
+        if (userEo1 == null) {
+            userEo.setAccountId(UuidUtil.generateString1());
+            userEo.setEmail(eo.getEmail());
+            userService.addAccount(userEo);
+            session.setAttribute("user", userEo);
+        } else {
+            session.setAttribute("user", userEo1);
+        }
+
+        return new Result(0,"success",null);
+    }
+
+    @RequestMapping("/backLogin")
+    public Result backLogin(UserEo userEo, HttpSession session) {
+        UserEo userEo1 = userService.backLogin(userEo);
+        if (userEo1 == null) {
+            return new Result(-1, "密码错误", null);
+        }
+        session.setAttribute("backuser", userEo1);
+        return new Result(0, "成功登录", null);
+    }
+
+
 }

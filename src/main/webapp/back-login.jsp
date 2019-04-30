@@ -24,7 +24,7 @@
         <div id="darkbannerwrap"></div>
         
         <form method="post" class="layui-form" >
-            <input name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
+            <input name="accountId" placeholder="账号"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr15">
             <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
             <hr class="hr15">
@@ -43,9 +43,32 @@
               //监听提交
               form.on('submit(login)', function(data){
                 // alert(888)
-                layer.msg(JSON.stringify(data.field),function(){
-                    location.href='/test/houtai'
-                });
+                  $.ajax({
+                      url:"/backLogin",
+                      data:data.field,
+                      dataType:"json",
+                      type:'get',
+                      success:function (result) {
+                          if (result.code==0){
+                              //layer.msg(data1.data, 1000);
+                              setTimeout(function () {
+                                  window.location.href = "/test/houtai";
+                              },1000)
+                          }
+                          else if (result.code == -1) {
+                              layer.msg("账号或密码错误");
+                          }
+                          else {
+                              layer.msg(result.errorMsg, {time: 1000});
+                          }
+                      },
+                      error:function () {
+                          layer.msg("登录异常");
+                      }
+                  });
+                  return false;
+
+
                 return false;
               });
             });

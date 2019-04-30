@@ -10,7 +10,6 @@ import java.io.Serializable;
 @Data
 public class UserEo implements Serializable {
     private Long id;
-    @Column(name = "account_id")
     private String accountId;
     private String userName;
     private String mobile;
@@ -25,6 +24,7 @@ public class UserEo implements Serializable {
     @Column(name = "update_time")
     private String updateTime;
     private Integer dr;
+    private String pnum;
 
 
 }

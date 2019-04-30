@@ -14,6 +14,7 @@ public class OrderEo {
         private String tradeNo;
         private Long accountId;
         private Integer status;
+        private String statusName;
         private Integer totalItemNum;
         private Double payAmount;
         private Double itemAmount;
@@ -25,8 +26,10 @@ public class OrderEo {
         private String cancelTime;
         private String abortTime;
         private Integer isPay;
+        private String isPayName;
         private String createTime;
         private String updateTime;
+        private String person;
         private Integer dr;
 
 

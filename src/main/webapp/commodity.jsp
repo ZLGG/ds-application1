@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
@@ -23,7 +23,8 @@
 
             <c:choose>
                 <c:when test="${sessionScope.user!=null}">
-                    <div class="login">${sessionScope.user}</div>
+                    <div class="login">${sessionScope.user.accountId}</div>
+                    <div class="login"><a href="/singOut">退出</a></div>
                 </c:when>
                 <c:otherwise>
                     <div class="login"><a href="/test/login">登录</a></div>
