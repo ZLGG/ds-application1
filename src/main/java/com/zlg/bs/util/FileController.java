@@ -35,7 +35,7 @@ public class FileController {
             fileName = fileName.substring(pos + 1);
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         Date d = new Date();
         String s = sdf.format(d).toString();
         //加个时间戳，尽量避免文件名称重复
