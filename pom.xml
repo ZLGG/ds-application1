@@ -54,7 +54,7 @@
             <artifactId>edas-dubbo-extension</artifactId>
             <version>1.0.2</version>
         </dependency>-->
-        <dependency>
+       <!-- <dependency>
             <groupId>com.zlg.bs</groupId>
             <artifactId>ds.center.userapi</artifactId>
             <version>1.0-SNAPSHOT</version>
@@ -67,7 +67,7 @@
             <version>1.0-SNAPSHOT</version>
             <scope>system</scope>
             <systemPath>D:/repository/com/zlg/bs/ds-center-itemapi/1.0-SNAPSHOT/ds-center-itemapi-1.0-SNAPSHOT.jar</systemPath>
-        </dependency>
+        </dependency>-->
 
         <!--javaMail模板-->
         <!--compile('org.springframework.boot:spring-boot-starter-thymeleaf')-->

@@ -1,10 +1,10 @@
 package com.zlg.bs.user.ctrl;
 
-import com.zlg.bs.center.user.vo.ResponseDto;
 import com.zlg.bs.user.eo.UserEo;
 import com.zlg.bs.user.service.UserServiceImpl;
 import com.zlg.bs.user.util.MailUtil;
 import com.zlg.bs.user.util.UuidUtil;
+import com.zlg.bs.vo.ResponseDto;
 import com.zlg.bs.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,7 +70,7 @@ public class UserController {
     public ResponseDto verifyCode(String email,HttpSession HttpSession) {
         String code = MailUtil.send(email);
         HttpSession.setAttribute("verifyCode",code);
-        return new ResponseDto(1);
+        return new ResponseDto<>(1);
     }
 
     @RequestMapping("/session")

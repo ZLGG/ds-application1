@@ -1,10 +1,9 @@
 package com.zlg.bs.item.ctrl;
 
 import com.sun.mail.imap.protocol.ID;
-import com.zlg.bs.center.user.vo.ResponseDto;
 import com.zlg.bs.item.service.ItemService;
 import com.zlg.bs.vo.*;
-import eo.Catalog;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -141,6 +140,7 @@ public class ItemController {
     }
 
 
+/*
 
     @ResponseBody
     @RequestMapping("/getTopCatalog")
@@ -181,6 +181,7 @@ public class ItemController {
         return new ResponseDto<>(catalogs);
 
     }
+*/
 
     @ResponseBody
     @RequestMapping("/addItem")

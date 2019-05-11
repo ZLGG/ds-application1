@@ -1,6 +1,6 @@
 package com.zlg.bs.util;
 
-import com.zlg.bs.center.user.vo.ResponseDto;
+import com.zlg.bs.vo.ResponseDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
